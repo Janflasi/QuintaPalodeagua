@@ -1,0 +1,33 @@
+/* static/css/profile.css */
+.profile-card .avatar-icon {
+    width: 80px;
+    height: 80px;
+    padding: 20px;
+    background-color: var(--color-principal);
+    color: white;
+    border-radius: 50%;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.profile-stats span {
+    font-size: 0.8rem;
+    color: #777;
+    display: block;
+}
+
+.info-card .list-group-item {
+    padding: 1rem 0;
+}
+
+.info-card .btn-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+}

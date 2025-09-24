@@ -1,0 +1,46 @@
+/* static/css/panel_base.css (Versión corregida para Admin Panel) */
+
+/* Forzamos a que el contenedor principal ocupe toda la altura */
+.admin-wrapper {
+    min-height: 100vh;
+}
+
+/* Estilos del Sidebar */
+.admin-sidebar {
+    width: 280px;
+    background-color: #f8f9fa; /* Un color de fondo ligeramente diferente */
+    border-right: 1px solid #dee2e6;
+}
+
+/* Estilos de los enlaces del menú */
+.admin-sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+    padding: .75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.admin-sidebar .nav-link .feather {
+    margin-right: 10px;
+    color: #727272;
+}
+
+/* Enlace activo y hover */
+.admin-sidebar .nav-link.active,
+.admin-sidebar .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--color-principal);
+}
+
+.admin-sidebar .nav-link.active .feather,
+.admin-sidebar .nav-link:hover .feather {
+    color: var(--color-principal);
+}
+
+/* Contenido principal */
+.admin-content {
+    flex-grow: 1; /* Asegura que ocupe el resto del espacio */
+    padding: 2rem;
+}

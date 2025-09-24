@@ -1,13 +1,71 @@
 {% extends 'reservas/panel_base.html' %}
+{% load static %}
 
 {% block title %}Disponibilidad{% endblock %}
 
 {% block panel_content %}
+<link rel="stylesheet" href="{% static 'css/calendario.css' %}">
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Calendario de Disponibilidad</h1>
 </div>
 
+<div class="alert alert-warning">
+    <strong>Fechas Ocupadas (DEBUG):</strong>
+    <p>La base de datos dice que estas son las fechas ocupadas:</p>
+    <pre>{{ fechas_ocupadas_debug }}</pre>
+    <small>Si aquí no aparecen las fechas que esperas (ej. 15 de Octubre), el problema está en la consulta a la base de datos. Si sí aparecen, el problema está en la clase ReservaCalendar.</small>
+</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Filtrar por Fecha</h5>
+        <form id="filter-form" method="get">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label for="id_mes" class="form-label">Mes</label>
+                    <select id="id_mes" name="mes" class="form-select">
+                        <option value="1" {% if mes_actual == 1 %}selected{% endif %}>Enero</option>
+                        <option value="2" {% if mes_actual == 2 %}selected{% endif %}>Febrero</option>
+                        <option value="3" {% if mes_actual == 3 %}selected{% endif %}>Marzo</option>
+                        <option value="4" {% if mes_actual == 4 %}selected{% endif %}>Abril</option>
+                        <option value="5" {% if mes_actual == 5 %}selected{% endif %}>Mayo</option>
+                        <option value="6" {% if mes_actual == 6 %}selected{% endif %}>Junio</option>
+                        <option value="7" {% if mes_actual == 7 %}selected{% endif %}>Julio</option>
+                        <option value="8" {% if mes_actual == 8 %}selected{% endif %}>Agosto</option>
+                        <option value="9" {% if mes_actual == 9 %}selected{% endif %}>Septiembre</option>
+                        <option value="10" {% if mes_actual == 10 %}selected{% endif %}>Octubre</option>
+                        <option value="11" {% if mes_actual == 11 %}selected{% endif %}>Noviembre</option>
+                        <option value="12" {% if mes_actual == 12 %}selected{% endif %}>Diciembre</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label for="id_ano" class="form-label">Año</label>
+                    <select id="id_ano" name="ano" class="form-select">
+                        {% for anio in rango_anios %}
+                            <option value="{{ anio }}" {% if anio == ano_actual %}selected{% endif %}>{{ anio }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-principal w-100">Ver</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <a href="{% url 'ver_disponibilidad_mes' year=mes_anterior.year month=mes_anterior.month %}" class="btn btn-outline-secondary">
+            &laquo; Anterior
+        </a>
+        
+        <h5 class="mb-0">{{ nombre_mes }} de {{ ano_actual }}</h5>
+        
+        <a href="{% url 'ver_disponibilidad_mes' year=mes_siguiente.year month=mes_siguiente.month %}" class="btn btn-outline-secondary">
+            Siguiente &raquo;
+        </a>
+    </div>
     <div class="card-body">
         <p>Los días marcados en rojo ya tienen una reserva <strong>confirmada</strong> y no están disponibles.</p>
         <div class="calendario-container">
@@ -15,4 +73,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Pequeño script para manejar el envío del formulario
+    document.getElementById('filter-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevenimos el envío normal
+        const mes = document.getElementById('id_mes').value;
+        const ano = document.getElementById('id_ano').value;
+        // Construimos la URL y redirigimos
+        window.location.href = `/reservas/disponibilidad/${ano}/${mes}/`;
+    });
+</script>
 {% endblock %}

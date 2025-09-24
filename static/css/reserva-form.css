@@ -1,0 +1,409 @@
+/* reserva-form.css - Versión Compacta Mejorada */
+
+/* Variables CSS para mantener consistencia */
+:root {
+    --color-principal: #d4825a;
+    --color-principal-light: #e8a082;
+    --color-principal-dark: #c06d47;
+    --color-terciario: #4CAF50;
+    --color-fondo: #fafafa;
+    --color-fondo-card: #ffffff;
+    --color-texto: #2c3e50;
+    --color-texto-light: #7f8c8d;
+    --radio-suave: 8px;
+    --radio-grande: 12px;
+    --sombra-suave: 0 2px 8px rgba(212, 130, 90, 0.1);
+    --sombra-card: 0 3px 10px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 6px 20px rgba(212, 130, 90, 0.12);
+    --transicion: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transicion-rapida: all 0.2s ease;
+}
+
+/* Header de la página - Versión compacta */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0 0.75rem 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(212, 130, 90, 0.12);
+    background: linear-gradient(135deg, rgba(212, 130, 90, 0.02) 0%, transparent 100%);
+    border-radius: var(--radio-suave);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.header-icon {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-principal-light));
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radio-suave);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+}
+
+.header-icon:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-hover);
+}
+
+.header-text h1 {
+    color: var(--color-texto);
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
+.header-subtitle {
+    color: var(--color-texto-light);
+    margin: 0.2rem 0 0 0;
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.status-badge {
+    background: linear-gradient(135deg, var(--color-terciario), #A5D6A7);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    box-shadow: var(--sombra-card);
+    transition: var(--transicion);
+}
+
+.status-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-hover);
+}
+
+/* Contenedor del formulario - Más compacto */
+.form-container {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.reservation-card {
+    background: var(--color-fondo-card);
+    border-radius: var(--radio-grande);
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+    transition: var(--transicion);
+    border: 1px solid rgba(212, 130, 90, 0.06);
+}
+
+.reservation-card:hover {
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-1px);
+}
+
+/* Header de la tarjeta - Compacto */
+.card-header-custom {
+    background: linear-gradient(135deg, 
+        rgba(212, 130, 90, 0.02) 0%, 
+        rgba(232, 160, 130, 0.02) 50%, 
+        rgba(247, 147, 30, 0.02) 100%);
+    padding: 1.25rem;
+    border-bottom: 1px solid rgba(212, 130, 90, 0.08);
+}
+
+.card-title-custom {
+    color: var(--color-texto);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.6rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-title-custom i {
+    color: var(--color-principal);
+    font-size: 1rem;
+}
+
+.card-description {
+    color: var(--color-texto-light);
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Cuerpo de la tarjeta - Compacto */
+.card-body-custom {
+    padding: 1.25rem;
+}
+
+/* Estilos del formulario - Compacto */
+.reservation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Grid para campos en dos columnas */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+}
+
+.form-row.single {
+    grid-template-columns: 1fr;
+}
+
+/* Estilos para los campos del formulario Django */
+.reservation-form .form-field {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.reservation-form label {
+    color: var(--color-texto);
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+}
+
+.reservation-form input,
+.reservation-form select,
+.reservation-form textarea {
+    padding: 0.65rem 0.75rem;
+    border: 1.5px solid rgba(212, 130, 90, 0.12);
+    border-radius: var(--radio-suave);
+    font-size: 0.9rem;
+    transition: var(--transicion);
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: inherit;
+}
+
+/* Estilos mejorados para el campo de fecha */
+.reservation-form input[type="date"] {
+    position: relative;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    cursor: pointer;
+    padding-right: 2.5rem;
+}
+
+.reservation-form input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="%23d4825a"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>') no-repeat center;
+    background-size: 14px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: var(--transicion-rapida);
+    position: absolute;
+    right: 0.75rem;
+    width: 20px;
+    height: 20px;
+}
+
+.reservation-form input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.reservation-form input:focus,
+.reservation-form select:focus,
+.reservation-form textarea:focus {
+    outline: none;
+    border-color: var(--color-principal);
+    background: var(--color-fondo-card);
+    box-shadow: 0 0 0 2px rgba(212, 130, 90, 0.08);
+    transform: translateY(-1px);
+}
+
+.reservation-form textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+
+/* Contenedor del botón de envío */
+.form-submit-container {
+    margin-top: 0.6rem;
+    text-align: center;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-principal-light));
+    color: white;
+    border: none;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transicion);
+    box-shadow: var(--sombra-suave);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 160px;
+    justify-content: center;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, var(--color-principal-dark), var(--color-principal));
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-hover);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+    box-shadow: var(--sombra-card);
+}
+
+.btn-submit i {
+    font-size: 0.9rem;
+    transition: var(--transicion-rapida);
+}
+
+.btn-submit:hover i {
+    transform: translateX(1px);
+}
+
+/* Mensajes de error - Compactos */
+.reservation-form .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0.3rem 0 0 0;
+}
+
+.reservation-form .errorlist li {
+    background: rgba(244, 67, 54, 0.08);
+    color: #d32f2f;
+    padding: 0.35rem 0.5rem;
+    border-radius: var(--radio-suave);
+    border-left: 2px solid #d32f2f;
+    font-size: 0.8rem;
+    margin-bottom: 0.15rem;
+    line-height: 1.3;
+}
+
+/* Campo con contenido */
+.reservation-form .has-content {
+    background: rgba(212, 130, 90, 0.015);
+    border-color: rgba(212, 130, 90, 0.18);
+}
+
+/* Campo enfocado */
+.field-focused {
+    transform: translateY(-0.5px);
+}
+
+/* Contador de caracteres */
+.character-counter {
+    font-size: 0.75rem;
+    color: var(--color-texto-light);
+    text-align: right;
+    margin-top: 0.3rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive - Ultra compacto */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 0.6rem;
+        align-items: center;
+        text-align: center;
+        padding: 0.75rem 0 0.5rem 0;
+    }
+    
+    .header-content {
+        justify-content: center;
+    }
+    
+    .header-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .header-text h1 {
+        font-size: 1.2rem;
+    }
+    
+    .status-badge {
+        align-self: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .card-header-custom,
+    .card-body-custom {
+        padding: 1rem;
+    }
+    
+    .btn-submit {
+        width: 100%;
+        padding: 0.75rem;
+        min-width: auto;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+    
+    .form-container {
+        max-width: 100%;
+        padding: 0 0.5rem;
+    }
+    
+    .reservation-form {
+        gap: 0.8rem;
+    }
+    
+    .card-title-custom {
+        font-size: 1rem;
+    }
+    
+    .card-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        gap: 0.5rem;
+    }
+    
+    .reservation-form {
+        gap: 0.7rem;
+    }
+    
+    .card-header-custom,
+    .card-body-custom {
+        padding: 0.8rem;
+    }
+    
+    .reservation-form input,
+    .reservation-form select,
+    .reservation-form textarea {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .reservation-form label {
+        font-size: 0.8rem;
+    }
+}

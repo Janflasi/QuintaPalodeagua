@@ -17,10 +17,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="{% url 'ver_disponibilidad' %}">
-    <span data-feather="calendar"></span>
-    Disponibilidad
-</a>
+                        <a class="nav-link" href="{% url 'crear_reserva' %}">
+                            <span data-feather="plus-circle"></span>
+                            Hacer una Nueva Reserva
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ver_disponibilidad' %}">
+                            <span data-feather="calendar"></span>
+                            Disponibilidad
+                        </a>
                     </li>
                      <li class="nav-item">
                         <a class="nav-link" href="{% url 'galeria' %}">
@@ -31,9 +37,15 @@
                 </ul>
 
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>INFORMACIÓN</span>
+                    <span>CUENTA E INFORMACIÓN</span>
                 </h6>
                 <ul class="nav flex-column mb-2">
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'perfil' %}">
+                            <span data-feather="user"></span>
+                            Mi Perfil
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'sobre_nosotros' %}">
                             <span data-feather="info"></span>
@@ -59,6 +71,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script>
-  feather.replace()
+  // Asegurarse de que feather.replace() se ejecute en cada página que use esta base.
+  // Mover la ejecución a main.js es una práctica aún mejor, pero esto también funciona.
+  feather.replace();
 </script>
 {% endblock %}

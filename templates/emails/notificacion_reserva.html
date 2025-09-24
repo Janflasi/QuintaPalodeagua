@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estado de tu Reserva</title>
+    <style>
+        body { font-family: 'Poppins', sans-serif; color: #333; }
+        .container { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .header { text-align: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .status { padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; color: white; }
+        .status.confirmed { background-color: #28a745; }
+        .status.cancelled { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Quinta Palo de Agua</h2>
+        </div>
+        <h3>Hola, {{ reserva.usuario.first_name|default:reserva.usuario.username }},</h3>
+        <p>Te informamos que el estado de tu reserva para el evento "<strong>{{ reserva.tipo_evento }}</strong>" en la fecha <strong>{{ reserva.fecha_reserva|date:"d \d\e F \d\e Y" }}</strong> ha sido actualizado.</p>
+        
+        {% if reserva.estado == 'confirmada' %}
+            <div class="status confirmed">NUEVO ESTADO: CONFIRMADA</div>
+            <p>¡Tu reserva ha sido confirmada! El precio final cotizado es de <strong>${{ reserva.precio_cotizado|floatformat:0 }} COP</strong>.</p>
+            <p>Nos pondremos en contacto contigo pronto para coordinar los detalles del pago y del evento.</p>
+        {% elif reserva.estado == 'cancelada' %}
+            <div class="status cancelled">NUEVO ESTADO: CANCELADA</div>
+            <p>Lamentamos informarte que tu solicitud de reserva ha sido cancelada. Si tienes alguna pregunta, no dudes en contactarnos.</p>
+        {% endif %}
+
+        <p>Gracias por preferir Quinta Palo de Agua.</p>
+    </div>
+</body>
+</html>

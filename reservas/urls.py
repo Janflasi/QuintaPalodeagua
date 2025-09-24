@@ -5,5 +5,8 @@ from . import views
 urlpatterns = [
     path('panel/', views.panel_usuario, name='panel_usuario'),
     path('crear/', views.crear_reserva, name='crear_reserva'), # <-- Añade esta línea
-     path('disponibilidad/', views.ver_disponibilidad, name='ver_disponibilidad'), # <-- Añade esta
+# URL sin parámetros (mes actual)
+    path('disponibilidad/', views.ver_disponibilidad, name='ver_disponibilidad'),
+    # URL con parámetros (para navegar entre meses)
+    path('disponibilidad/<int:year>/<int:month>/', views.ver_disponibilidad, name='ver_disponibilidad_mes'),
 ]
