@@ -1,0 +1,18 @@
+{% extends 'reservas/panel_base.html' %}
+
+{% block title %}Disponibilidad{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Calendario de Disponibilidad</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p>Los días marcados en rojo ya tienen una reserva <strong>confirmada</strong> y no están disponibles.</p>
+        <div class="calendario-container">
+            {{ calendario|safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

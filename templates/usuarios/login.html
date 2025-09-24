@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<!-- CSS específico del login -->
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<div class="login-page">
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Columna izquierda - Formulario -->
+            <div class="col-lg-5 col-md-6 d-flex align-items-center justify-content-center">
+                <div class="login-form-container">
+                    <div class="login-brand mb-4">
+                        <span data-feather="home" class="brand-icon-login"></span>
+                        <h3 class="brand-title">Quinta Palo de Agua</h3>
+                    </div>
+                    
+                    <div class="welcome-text mb-4">
+                        <h1 class="welcome-title">¡Bienvenido!</h1>
+                        <p class="welcome-subtitle">Inicia sesión para acceder a tu cuenta</p>
+                    </div>
+
+                    <form method="post" class="modern-form" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Campo Usuario -->
+                        <div class="form-group-modern mb-4">
+                            <div class="input-wrapper">
+                                <span data-feather="user" class="input-icon"></span>
+                                {{ form.username }}
+                                <label for="{{ form.username.id_for_label }}" class="floating-label">Usuario o Email</label>
+                                <div class="input-border"></div>
+                            </div>
+                            {% if form.username.errors %}
+                                <div class="error-message">
+                                    <span data-feather="alert-circle" class="error-icon-small"></span>
+                                    {{ form.username.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo Contraseña -->
+                        <div class="form-group-modern mb-4">
+                            <div class="input-wrapper">
+                                <span data-feather="lock" class="input-icon"></span>
+                                {{ form.password }}
+                                <label for="{{ form.password.id_for_label }}" class="floating-label">Contraseña</label>
+                                <button type="button" class="password-visibility" id="togglePassword">
+                                    <span data-feather="eye" class="visibility-icon"></span>
+                                </button>
+                                <div class="input-border"></div>
+                            </div>
+                            {% if form.password.errors %}
+                                <div class="error-message">
+                                    <span data-feather="alert-circle" class="error-icon-small"></span>
+                                    {{ form.password.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Errores generales -->
+                        {% if form.non_field_errors %}
+                            <div class="alert-modern alert-error mb-4">
+                                <span data-feather="x-circle" class="alert-icon"></span>
+                                <div class="alert-content">
+                                    <strong>Error de autenticación</strong>
+                                    <p>{{ form.non_field_errors.0 }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Recordar sesión -->
+                        <div class="form-options mb-4">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="remember_me">
+                                <span class="checkmark"></span>
+                                Recordar mi sesión
+                            </label>
+                            <a href="#" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
+                        </div>
+
+                        <!-- Botón de envío -->
+                        <button type="submit" class="btn-modern btn-primary-modern">
+                            <span class="btn-content">
+                                <span data-feather="log-in" class="btn-icon-modern"></span>
+                                <span class="btn-text">Iniciar Sesión</span>
+                            </span>
+                            <div class="btn-ripple"></div>
+                            <div class="btn-loading">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+
+                        <!-- Divisor -->
+                        <div class="divider-modern my-4">
+                            <span class="divider-text">o continúa con</span>
+                        </div>
+
+                        <!-- Enlaces adicionales -->
+                        <div class="additional-links text-center">
+                            <p class="signup-prompt">
+                                ¿No tienes una cuenta? 
+                                <a href="{% url 'registro' %}" class="signup-link">
+                                    <span data-feather="user-plus" class="link-icon"></span>
+                                    Regístrate gratis
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Columna derecha - Imagen/Decoración -->
+            <div class="col-lg-7 col-md-6 d-none d-md-block">
+                <div class="login-visual">
+                    <div class="visual-overlay">
+                        <div class="overlay-content">
+                            <h2 class="visual-title">Momentos Inolvidables</h2>
+                            <p class="visual-description">
+                                Celebra con nosotros y crea recuerdos que durarán toda la vida en nuestra hermosa quinta.
+                            </p>
+                            <div class="features-list">
+                                <div class="feature-item">
+                                    <span data-feather="check-circle" class="feature-icon"></span>
+                                    <span>Eventos personalizados</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span data-feather="check-circle" class="feature-icon"></span>
+                                    <span>Espacios únicos</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span data-feather="check-circle" class="feature-icon"></span>
+                                    <span>Atención profesional</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decoración geométrica -->
+                    <div class="geometric-decoration">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript específico del login -->
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

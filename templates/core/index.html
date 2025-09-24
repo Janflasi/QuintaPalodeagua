@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="swiper-container hero-slider">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url({% static 'img/piscina.png' %});">
+            <div class="hero-content">
+                <h1 class="display-3 text-white">Bienvenido a Quinta Palo de Agua</h1>
+                <p class="lead text-white">El lugar perfecto para tus eventos y descanso.</p>
+                <a href="{% url 'registro' %}" class="btn btn-principal btn-lg">¡Reserva Ahora!</a>
+            </div>
+        </div>
+        <div class="swiper-slide" style="background-image: url({% static 'img/quinta.png' %});">
+             <div class="hero-content">
+                <h1 class="display-3 text-white">Momentos Inolvidables</h1>
+                <p class="lead text-white">Celebra con nosotros y crea recuerdos que durarán toda la vida.</p>
+                <a href="{% url 'galeria' %}" class="btn btn-principal btn-lg">Ver Galería</a>
+            </div>
+        </div>
+        <div class="swiper-slide" style="background-image: url({% static 'img/paloagua.png' %});">
+             <div class="hero-content">
+                <h1 class="display-3 text-white">Naturaleza y Confort</h1>
+                <p class="lead text-white">Un escape perfecto de la rutina.</p>
+                <a href="#" class="btn btn-principal btn-lg">Ver Disponibilidad</a>
+            </div>
+        </div>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h2>Un Espacio Único para Ti</h2>
+            <p class="lead">Quinta Palo de Agua es más que un lugar, es una experiencia. Diseñada para ofrecer confort y versatilidad, nuestra quinta es el escenario ideal para bodas, reuniones familiares, retiros corporativos y cualquier celebración que desees hacer memorable.</p>
+            <a href="{% url 'sobre_nosotros' %}" class="btn btn-outline-secondary">Conoce más sobre nosotros</a>
+        </div>
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <img src="{% static 'img/quinta.png' %}" class="img-fluid rounded shadow" alt="Vista de la Quinta">
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-light py-5">
+    <div class="container">
+        <div class="row text-center mb-4">
+            <div class="col">
+                <h2>Recorre la Quinta</h2>
+                <p class="lead">Un tour virtual para que te enamores del lugar.</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="ratio ratio-16x9 shadow rounded">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

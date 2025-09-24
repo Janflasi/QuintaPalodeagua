@@ -1,0 +1,25 @@
+{% extends 'reservas/panel_base.html' %}
+
+{% block title %}Galería{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Nuestra Galería</h1>
+</div>
+
+<p class="lead">Un vistazo a los mejores momentos y espacios de la Quinta Palo de Agua.</p>
+
+<div class="row">
+    {% for foto in fotos %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <a href="{{ foto.imagen.url }}">
+            <img src="{{ foto.imagen.url }}" class="img-fluid rounded shadow-sm" alt="{{ foto.titulo }}">
+        </a>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p class="text-center">Aún no se han subido fotos a la galería.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

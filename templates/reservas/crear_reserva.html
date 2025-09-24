@@ -1,0 +1,23 @@
+{% extends 'reservas/panel_base.html' %}
+
+{% block title %}Hacer una Nueva Reserva{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Solicitar una Reserva</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Completa el formulario</h5>
+        <p>Tu solicitud quedará en estado "Pendiente" hasta que sea revisada por un administrador.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-principal mt-3">Enviar Solicitud</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
