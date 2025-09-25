@@ -1,72 +1,33 @@
-{% extends 'reservas/panel_base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 
 {% block title %}Mi Perfil{% endblock %}
 
-{% block panel_content %}
-
-<div class="page-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
-    <h1 class="h2">Mi Perfil</h1>
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-lg-4 col-md-10 mb-4">
-        <div class="panel-card text-center">
-            <div class="card-body">
-                <div class="profile-avatar mb-3">
-                    <span data-feather="user" class="avatar-icon"></span>
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">{{ user.username }}</h4>
+                    <p class="text-muted">Cliente</p>
                 </div>
-                <h4 class="card-title">{{ user.first_name|default:user.username }} {{ user.last_name }}</h4>
-                <p class="text-muted">@{{ user.username }}</p>
-                <div class="profile-stats mt-4">
-                    <div>
-                        <strong>0</strong>
-                        <span>Reservas Activas</span>
-                    </div>
-                    <div>
-                        <strong>0</strong>
-                        <span>Reservas Pasadas</span>
-                    </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Información de la Cuenta</h3>
+                    <hr>
+                    <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+                    <p><strong>Correo electrónico:</strong> {{ user.email }}</p>
+                    <p><strong>Nombre:</strong> {{ user.first_name|default:"No especificado" }}</p>
+                    <p><strong>Apellido:</strong> {{ user.last_name|default:"No especificado" }}</p>
+                    <hr>
+                   <a href="{% url 'editar_perfil' %}" class="btn btn-principal">Editar Perfil</a>
+                    <a href="#" class="btn btn-secondary">Mis Reservas</a>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-lg-7 col-md-10">
-        <div class="panel-card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title mb-0">Información de la Cuenta</h5>
-                    <a href="{% url 'editar_perfil' %}" class="btn btn-sm btn-principal">
-                        <span data-feather="edit-2" class="btn-icon"></span>
-                        Editar Perfil
-                    </a>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <strong>Nombre de Usuario:</strong>
-                        <span>{{ user.username }}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Correo Electrónico:</strong>
-                        <span>{{ user.email }}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Nombre:</strong>
-                        <span>{{ user.first_name|default:"No especificado" }}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Apellido:</strong>
-                        <span>{{ user.last_name|default:"No especificado" }}</span>
-                    </li>
-                     <li class="list-group-item">
-                        <strong>Miembro desde:</strong>
-                        <span>{{ user.date_joined|date:"d M, Y" }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
-
 {% endblock %}

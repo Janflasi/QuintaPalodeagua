@@ -11,7 +11,6 @@ urlpatterns = [
     path('galeria/', include('galeria.urls')),
     path('cuentas/', include('usuarios.urls')), # <-- Agrega esta línea
     path('reservas/', include('reservas.urls')), # <-- Agrega esta línea
-     path('panel-admin/', include('panel_admin.urls')), # Nuestro nuevo panel
 
 ]
 

@@ -1,51 +1,23 @@
 {% extends 'reservas/panel_base.html' %}
-{% load static %}
 
 {% block title %}Hacer una Nueva Reserva{% endblock %}
 
 {% block panel_content %}
-<div class="page-header">
-    <div class="header-content">
-        <div class="header-icon">
-            <i class="fas fa-calendar-plus"></i>
-        </div>
-        <div class="header-text">
-            <h1 class="h2">Solicitar una Reserva</h1>
-            <p class="header-subtitle">Completa el formulario para enviar tu solicitud</p>
-        </div>
-    </div>
-    <div class="status-badge">
-        <i class="fas fa-clock"></i>
-        <span>Estado: Pendiente</span>
-    </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Solicitar una Reserva</h1>
 </div>
 
-<div class="form-container">
-    <div class="reservation-card">
-        <div class="card-header-custom">
-            <h5 class="card-title-custom">
-                <i class="fas fa-edit"></i>
-                Información de la Reserva
-            </h5>
-            <p class="card-description">Tu solicitud quedará en estado <strong>"Pendiente"</strong> hasta que sea revisada por un administrador.</p>
-        </div>
-        
-        <div class="card-body-custom">
-            <form method="post" class="reservation-form">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div class="form-submit-container">
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i>
-                        Enviar Solicitud
-                    </button>
-                </div>
-            </form>
-        </div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Completa el formulario</h5>
+        <p>Tu solicitud quedará en estado "Pendiente" hasta que sea revisada por un administrador.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-principal mt-3">Enviar Solicitud</button>
+            </div>
+        </form>
     </div>
 </div>
-
-<!-- Cargar CSS y JS -->
-<link rel="stylesheet" href="{% static 'css/reserva-form.css' %}">
-<script src="{% static 'js/reserva-form.js' %}"></script>
 {% endblock %}

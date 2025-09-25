@@ -1,60 +1,24 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}Registro de Usuario{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/register.css' %}">
-
-<div class="register-container">
-    <div class="register-visual">
-        <div class="register-brand">
-            <span data-feather="home" class="brand-icon"></span>
-            <h2 class="brand-title">Quinta Palo de Agua</h2>
-        </div>
-        <div class="visual-content">
-            <h1>Únete a Nuestra Familia</h1>
-            <p>Regístrate y descubre por qué somos el lugar perfecto para celebrar tus momentos más especiales. Accede a ofertas exclusivas y gestiona tus reservas de forma sencilla.</p>
-        </div>
-    </div>
-
-    <div class="register-form-section">
-        <div class="form-header">
-            <h2>¡Crea tu Cuenta!</h2>
-            <p>Completa el formulario para empezar.</p>
-        </div>
-
-        <form method="post" novalidate>
-            {% csrf_token %}
-            
-            {% for field in form %}
-            <div class="form-group">
-                {{ field }}
-                <label for="{{ field.id_for_label }}" class="visually-hidden">{{ field.label }}</label>
-                {% if field.name == 'username' %}<span data-feather="user" class="input-icon"></span>{% endif %}
-                {% if field.name == 'first_name' %}<span data-feather="user-check" class="input-icon"></span>{% endif %}
-                {% if field.name == 'last_name' %}<span data-feather="users" class="input-icon"></span>{% endif %}
-                {% if field.name == 'email' %}<span data-feather="mail" class="input-icon"></span>{% endif %}
-                {% if field.name == 'password1' %}<span data-feather="lock" class="input-icon"></span>{% endif %}
-                {% if field.name == 'password2' %}<span data-feather="shield" class="input-icon"></span>{% endif %}
-                
-                {% if field.errors %}
-                    <div class="error-message mt-2">{{ field.errors.0 }}</div>
-                {% endif %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Crear una Cuenta</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-principal mt-3">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            {% endfor %}
-
-            <button type="submit" class="btn-submit-register">Crear Cuenta</button>
-        </form>
-
-        <div class="additional-links">
-            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
         </div>
     </div>
 </div>
-
-<script>
-    // Ejecutar Feather Icons para esta página
-    feather.replace();
-</script>
 {% endblock %}
