@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'usuarios.apps.UsuariosConfig',
     'reservas.apps.ReservasConfig',
     'galeria.apps.GaleriaConfig',
+    'notificaciones.apps.NotificacionesConfig', # <-- AÑADE ESTA LÍNEA
 ]
 
 MIDDLEWARE = [
@@ -134,7 +135,16 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-LOGIN_REDIRECT_URL = 'panel_usuario' # Cambia 'index' por 'panel_usuario'
+LOGIN_REDIRECT_URL = 'login_redirect' 
+
+# --- CONFIGURACIÓN PARA ENVÍO DE CORREOS REALES CON GMAIL ---
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  # Para una conexión segura
+EMAIL_HOST_USER = 'juanyanflagonzalez@gmail.com'
+EMAIL_HOST_PASSWORD = 'tihd uhip genk azow'
+DEFAULT_FROM_EMAIL = 'tu_correo@gmail.com' # El correo que los usuarios verán como remitente
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

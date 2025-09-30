@@ -9,14 +9,26 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Editar mi Información</h2>
+                    
                     <form method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        
+                        <fieldset class="mb-4">
+                            <legend class="h5">Datos de la Cuenta</legend>
+                            {{ u_form.as_p }}
+                        </fieldset>
+                        
+                        <fieldset>
+                            <legend class="h5">Información de Contacto</legend>
+                            {{ p_form.as_p }}
+                        </fieldset>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                             <a href="{% url 'perfil' %}" class="btn btn-secondary me-md-2">Cancelar</a>
                             <button type="submit" class="btn btn-principal">Guardar Cambios</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>¡Tu Reserva ha sido Confirmada!</title>
+</head>
+<body>
+    <h2>¡Hola, {{ user.first_name|default:user.username }}!</h2>
+    <p>Nos complace informarte que tu solicitud de reserva en <strong>Quinta Palo de Agua</strong> ha sido <strong>confirmada</strong>.</p>
+    
+    <h4>Detalles de la Reserva:</h4>
+    <ul>
+        <li><strong>Fecha del Evento:</strong> {{ reserva.fecha_reserva|date:"d M, Y" }}</li>
+        <li><strong>Tipo de Evento:</strong> {{ reserva.tipo_evento }}</li>
+        <li><strong>Número de Personas:</strong> {{ reserva.numero_personas }}</li>
+    </ul>
+
+    <p>¡Estamos emocionados de tenerte con nosotros! Si tienes alguna pregunta, no dudes en contactarnos.</p>
+    <p>Saludos,<br>El equipo de Quinta Palo de Agua</p>
+</body>
+</html>

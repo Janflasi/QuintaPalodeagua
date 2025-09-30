@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Actualización sobre tu Reserva</title>
+</head>
+<body>
+    <h2>¡Hola, {{ user.first_name|default:user.username }}!</h2>
+    <p>Te escribimos para informarte que tu solicitud de reserva en <strong>Quinta Palo de Agua</strong> para la fecha {{ reserva.fecha_reserva|date:"d M, Y" }} ha sido <strong>rechazada</strong>.</p>
+    
+    <p>Esto puede deberse a que la fecha ya no se encuentra disponible. Por favor, revisa nuestro calendario de disponibilidad y no dudes en hacer una nueva solicitud para otra fecha.</p>
+    
+    <p>Lamentamos cualquier inconveniente.</p>
+    <p>Saludos,<br>El equipo de Quinta Palo de Agua</p>
+</body>
+</html>

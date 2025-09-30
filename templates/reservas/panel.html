@@ -9,7 +9,14 @@
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Historial de Reservas</h5>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Historial de Reservas</h5>
+            <a href="{% url 'crear_reserva' %}" class="btn btn-principal">
+                <span data-feather="plus-circle" style="width:18px; height:18px; margin-right: 4px;"></span>
+                Hacer una Reserva
+            </a>
+        </div>
+        
         <p>Aquí verás un listado de todas las reservas que has realizado.</p>
 
         <div class="table-responsive">
@@ -20,7 +27,7 @@
                         <th scope="col">Tipo de Evento</th>
                         <th scope="col">N° de Personas</th>
                         <th scope="col">Estado</th>
-                    </tr>
+                        <th scope="col">Acciones</th> </tr>
                 </thead>
                 <tbody>
                     {% for reserva in reservas %}
@@ -37,11 +44,20 @@
                                 <span class="badge bg-danger">Cancelada</span>
                             {% endif %}
                         </td>
+                        <td>
+                            {% if reserva.estado == 'pendiente' %}
+                                <form action="{% url 'cancelar_reserva_usuario' reserva.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                                </form>
+                            {% else %}
+                                <span class="text-muted">--</span>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="4" class="text-center">Aún no tienes reservas registradas.</td>
-                    </tr>
+                        <td colspan="5" class="text-center">Aún no tienes reservas registradas.</td> </tr>
                     {% endfor %}
                 </tbody>
             </table>

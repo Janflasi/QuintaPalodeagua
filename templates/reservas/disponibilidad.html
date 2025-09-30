@@ -1,17 +1,143 @@
 {% extends 'reservas/panel_base.html' %}
 
-{% block title %}Disponibilidad{% endblock %}
+{% block title %}Calendario de Disponibilidad{% endblock %}
 
 {% block panel_content %}
+<style>
+    /* Estilos para el calendario */
+    .calendario-container {
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .calendario-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    .calendario-header h2 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: var(--color-principal);
+        margin: 0;
+    }
+    .calendario-nav a {
+        text-decoration: none;
+        color: var(--color-secundario);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    .calendario-nav a:hover {
+        background-color: #f0f0f0;
+        color: var(--color-principal-dark);
+    }
+    .calendario-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+    .calendario-dia, .calendario-header-dia {
+        text-align: center;
+        padding: 1rem 0.5rem;
+        font-weight: 500;
+    }
+    .calendario-header-dia {
+        color: var(--color-texto-light);
+        font-size: 0.9em;
+    }
+    .calendario-dia {
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+    .dia-otro-mes {
+        color: #ccc;
+    }
+    .dia-ocupado {
+        background-color: #f8d7da; /* Rojo suave */
+        color: #721c24;
+        text-decoration: line-through;
+        cursor: not-allowed;
+    }
+    .dia-hoy {
+        border: 2px solid var(--color-principal);
+    }
+    .calendario-leyenda {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        font-size: 0.9em;
+    }
+    .leyenda-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .color-box {
+        width: 15px;
+        height: 15px;
+        border-radius: 4px;
+    }
+</style>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Calendario de Disponibilidad</h1>
+    <h1 class="h2">Disponibilidad</h1>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <p>Los días marcados en rojo ya tienen una reserva <strong>confirmada</strong> y no están disponibles.</p>
-        <div class="calendario-container">
-            {{ calendario|safe }}
+
+<div class="calendario-container">
+    <div class="calendario-header">
+        <div class="calendario-nav">
+            <a href="{% url 'ver_disponibilidad' year=prev_month_year month=prev_month %}">&laquo; Anterior</a>
+        </div>
+        <h2>{{ nombre_mes }} {{ year }}</h2>
+        <div class="calendario-nav">
+            <a href="{% url 'ver_disponibilidad' year=next_month_year month=next_month %}">Siguiente &raquo;</a>
+        </div>
+    </div>
+    
+    <div class="calendario-grid">
+        <div class="calendario-header-dia">Lun</div>
+        <div class="calendario-header-dia">Mar</div>
+        <div class="calendario-header-dia">Mié</div>
+        <div class="calendario-header-dia">Jue</div>
+        <div class="calendario-header-dia">Vie</div>
+        <div class="calendario-header-dia">Sáb</div>
+        <div class="calendario-header-dia">Dom</div>
+
+        {% for semana in semanas %}
+            {% for dia in semana %}
+                {% if dia.month == month %}
+                    {# Este día pertenece al mes actual #}
+                    <div class="calendario-dia 
+                        {% if dia == hoy %}dia-hoy{% endif %} 
+                        {% if dia in fechas_ocupadas %}dia-ocupado{% endif %}">
+                        {{ dia.day }}
+                    </div>
+                {% else %}
+                    {# Este día pertenece al mes anterior o siguiente #}
+                    <div class="calendario-dia dia-otro-mes">
+                        {{ dia.day }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="calendario-leyenda">
+        <div class="leyenda-item">
+            <div class="color-box" style="border: 2px solid var(--color-principal);"></div>
+            <span>Hoy</span>
+        </div>
+        <div class="leyenda-item">
+            <div class="color-box" style="background-color: #f8d7da;"></div>
+            <span>Ocupado</span>
         </div>
     </div>
 </div>

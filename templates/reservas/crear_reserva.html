@@ -1,4 +1,5 @@
 {% extends 'reservas/panel_base.html' %}
+{% load static %}
 
 {% block title %}Hacer una Nueva Reserva{% endblock %}
 
@@ -11,7 +12,10 @@
     <div class="card-body">
         <h5 class="card-title">Completa el formulario</h5>
         <p>Tu solicitud quedará en estado "Pendiente" hasta que sea revisada por un administrador.</p>
-        <form method="post">
+        
+        <div id="form-messages" class="mt-3"></div>
+
+        <form method="post" id="reserva-form" action="{% url 'crear_reserva' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <div class="d-grid">
@@ -20,4 +24,6 @@
         </form>
     </div>
 </div>
+
+<script src="{% static 'js/ajax_forms.js' %}"></script>
 {% endblock %}

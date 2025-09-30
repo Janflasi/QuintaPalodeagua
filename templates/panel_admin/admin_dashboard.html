@@ -1,0 +1,36 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+
+{% block title %}Dashboard del Admin{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total de Usuarios</h5>
+                <p class="card-text display-4">{{ total_usuarios }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-dark bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Reservas Pendientes</h5>
+                <p class="card-text display-4">{{ reservas_pendientes }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Reservas Confirmadas</h5>
+                <p class="card-text display-4">{{ reservas_confirmadas }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

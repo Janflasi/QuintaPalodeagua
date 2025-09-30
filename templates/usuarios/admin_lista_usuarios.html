@@ -1,0 +1,47 @@
+{% extends 'panel_admin_base.html' %}
+
+{% block title %}Gestionar Usuarios{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Gestionar Usuarios</h1>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>
+                    {% if usuario.is_active %}
+                        <span class="badge bg-success">Activo</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactivo</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    <form action="{% url 'toggle_usuario_active' usuario.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        {% if usuario.is_active %}
+                            <button type="submit" class="btn btn-danger btn-sm">Desactivar</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-success btn-sm">Activar</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

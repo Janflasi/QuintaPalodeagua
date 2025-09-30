@@ -1,0 +1,42 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+
+{% block title %}Gestionar Galería{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Gestionar Galería</h1>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Subir Nueva Foto</h5>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-principal">Subir Foto</button>
+        </form>
+    </div>
+</div>
+
+<h2 class="h4">Fotos Actuales</h2>
+<div class="row">
+    {% for foto in fotos %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card h-100">
+            <img src="{{ foto.imagen.url }}" class="card-img-top" alt="{{ foto.titulo }}" style="height: 200px; object-fit: cover;">
+            <div class="card-body text-center d-flex flex-column justify-content-between">
+                <p class="card-text">{{ foto.titulo }}</p>
+                <form action="{% url 'eliminar_foto_admin' foto.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p>No hay fotos en la galería.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
