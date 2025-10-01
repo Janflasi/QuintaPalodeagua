@@ -1,0 +1,49 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+
+{% block title %}Gestionar Reseñas{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Gestionar Reseñas</h1>
+</div>
+
+<div class="row">
+    {% for resena in resenas %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    <strong>{{ resena.usuario.username }}</strong> - 
+                    <span class="text-warning">{% for i in "x"|ljust:resena.calificacion %}★{% endfor %}</span>
+                </span>
+                {% if resena.aprobada %}
+                    <span class="badge bg-success">Aprobada</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pendiente</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <p class="card-text">"{{ resena.comentario }}"</p>
+                <small class="text-muted">Dejada el: {{ resena.fecha_creacion|date:"d M, Y" }}</small>
+            </div>
+            <div class="card-footer text-end">
+                {% if not resena.aprobada %}
+                <form action="{% url 'aprobar_resena_admin' resena.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+                </form>
+                {% endif %}
+                <form action="{% url 'eliminar_resena_admin' resena.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p>No hay reseñas para mostrar.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<style>
+    .contact-card {
+        background: linear-gradient(135deg, var(--color-principal-light), var(--color-principal));
+        color: white;
+        border-radius: var(--radio-grande);
+        padding: 3rem;
+        box-shadow: var(--sombra-hover);
+    }
+    .contact-card h2 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+    }
+    .contact-number {
+        font-size: 2.5rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        border: 2px dashed white;
+        padding: 1rem 2rem;
+        display: inline-block;
+        border-radius: var(--radio-suave);
+        margin: 1.5rem 0;
+        transition: all 0.3s ease;
+    }
+    .contact-number:hover {
+        background: rgba(255,255,255,0.1);
+        transform: scale(1.05);
+    }
+    .contact-social a {
+        color: white;
+        margin: 0 0.75rem;
+        transform: scale(1.5);
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    .contact-social a:hover {
+        transform: scale(1.7) translateY(-2px);
+    }
+</style>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h2>Estamos para Servirte</h2>
+                <p class="lead">Ponte en contacto con nosotros para planificar tu próximo evento inolvidable.</p>
+            </div>
+            
+            <div class="contact-card text-center">
+                <h2>Llámanos o Escríbenos</h2>
+                <p>La comunicación directa es la mejor. Contáctanos por WhatsApp o llámanos para una atención personalizada.</p>
+                
+                <div class="contact-number">
+                    <span data-feather="phone" class="me-2"></span>313 230 5374
+                </div>
+
+                <p>También puedes encontrarnos en nuestras redes sociales:</p>
+                <div class="contact-social mt-3">
+                    <a href="#"><span data-feather="facebook"></span></a>
+                    <a href="#"><span data-feather="instagram"></span></a>
+                    <a href="#"><span data-feather="message-square"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

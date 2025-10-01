@@ -27,7 +27,8 @@
                         <th scope="col">Tipo de Evento</th>
                         <th scope="col">N° de Personas</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Acciones</th> </tr>
+                        <th scope="col">Acciones</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for reserva in reservas %}
@@ -50,6 +51,8 @@
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
                                 </form>
+                            {% elif reserva.estado == 'confirmada' and reserva.ha_pasado and not reserva.resena %}
+                                <a href="{% url 'crear_resena' reserva.id %}" class="btn btn-info btn-sm">Dejar Reseña</a>
                             {% else %}
                                 <span class="text-muted">--</span>
                             {% endif %}
@@ -57,7 +60,8 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center">Aún no tienes reservas registradas.</td> </tr>
+                        <td colspan="5" class="text-center">Aún no tienes reservas registradas.</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>

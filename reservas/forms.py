@@ -1,6 +1,7 @@
 # reservas/forms.py (archivo nuevo)
 from django import forms
 from .models import Reserva
+from .models import Reserva, Resena # <-- Añade Resena
 
 class ReservaForm(forms.ModelForm):
     class Meta:
@@ -24,4 +25,19 @@ class ReservaForm(forms.ModelForm):
             'fecha_reserva': 'Fecha deseada para el evento',
             'numero_personas': 'Número estimado de personas',
             'tipo_evento': 'Tipo de evento',
+        }
+
+
+# --- AÑADE ESTE NUEVO FORMULARIO ---
+class ResenaForm(forms.ModelForm):
+    class Meta:
+        model = Resena
+        fields = ['calificacion', 'comentario']
+        widgets = {
+            'calificacion': forms.Select(attrs={'class': 'form-select'}),
+            'comentario': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+        labels = {
+            'calificacion': 'Tu Calificación (de 1 a 5 estrellas)',
+            'comentario': 'Tu Comentario',
         }

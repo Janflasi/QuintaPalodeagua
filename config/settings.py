@@ -37,12 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     # Mis Apps (agregamos esto)
+
+    # Apps de terceros (allauth)
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    # Mis Apps
     'core.apps.CoreConfig',
     'usuarios.apps.UsuariosConfig',
     'reservas.apps.ReservasConfig',
     'galeria.apps.GaleriaConfig',
-    'notificaciones.apps.NotificacionesConfig', # <-- AÑADE ESTA LÍNEA
+    'notificaciones.apps.NotificacionesConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # --- AÑADE ESTA LÍNEA AL FINAL ---
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -60,7 +70,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # <-- Modifica esta línea
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,18 +100,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 
@@ -110,9 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -120,31 +120,50 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-# ... (al final del archivo, después de STATIC_URL)
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-
-# ... (al final del archivo)
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-LOGIN_REDIRECT_URL = 'login_redirect' 
-
-# --- CONFIGURACIÓN PARA ENVÍO DE CORREOS REALES CON GMAIL ---
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True  # Para una conexión segura
-EMAIL_HOST_USER = 'juanyanflagonzalez@gmail.com'
-EMAIL_HOST_PASSWORD = 'tihd uhip genk azow'
-DEFAULT_FROM_EMAIL = 'tu_correo@gmail.com' # El correo que los usuarios verán como remitente
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# --- CONFIGURACIÓN DE CORREOS ---
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'juanyanflagonzalez@gmail.com'
+EMAIL_HOST_PASSWORD = 'tihd uhip genk azow'
+DEFAULT_FROM_EMAIL = 'Quinta Palo de Agua <juanyanflagonzalez@gmail.com>'
+
+
+# --- CONFIGURACIÓN DE AUTENTICACIÓN Y ALLAUTH ---
+
+AUTHENTICATION_BACKENDS = [
+    # Necesario para iniciar sesión en el admin con usuario y contraseña
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = 'login_redirect'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'index'
+LOGIN_URL = 'login' # Asegúrate de tener esta línea
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}

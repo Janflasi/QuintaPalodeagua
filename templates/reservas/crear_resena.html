@@ -1,0 +1,24 @@
+{% extends 'reservas/panel_base.html' %}
+
+{% block title %}Dejar una Reseña{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Evalúa tu Estancia</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Reseña para la reserva del {{ reserva.fecha_reserva|date:"d M, Y" }}</h5>
+        <p>Tu opinión es muy importante para nosotros. Por favor, comparte tu experiencia.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-principal mt-3">Enviar Reseña</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

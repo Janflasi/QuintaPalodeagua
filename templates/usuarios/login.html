@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load socialaccount %}
 
 {% block title %}Iniciar Sesión{% endblock %}
 
 {% block content %}
-<!-- CSS específico del login -->
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
 <div class="login-page">
     <div class="container-fluid">
         <div class="row min-vh-100">
-            <!-- Columna izquierda - Formulario -->
             <div class="col-lg-5 col-md-6 d-flex align-items-center justify-content-center">
                 <div class="login-form-container">
                     <div class="login-brand mb-4">
@@ -26,81 +25,53 @@
                     <form method="post" class="modern-form" novalidate>
                         {% csrf_token %}
                         
-                        <!-- Campo Usuario -->
                         <div class="form-group-modern mb-4">
                             <div class="input-wrapper">
                                 <span data-feather="user" class="input-icon"></span>
                                 {{ form.username }}
                                 <label for="{{ form.username.id_for_label }}" class="floating-label">Usuario o Email</label>
-                                <div class="input-border"></div>
                             </div>
-                            {% if form.username.errors %}
-                                <div class="error-message">
-                                    <span data-feather="alert-circle" class="error-icon-small"></span>
-                                    {{ form.username.errors.0 }}
-                                </div>
-                            {% endif %}
                         </div>
-
-                        <!-- Campo Contraseña -->
                         <div class="form-group-modern mb-4">
                             <div class="input-wrapper">
                                 <span data-feather="lock" class="input-icon"></span>
                                 {{ form.password }}
                                 <label for="{{ form.password.id_for_label }}" class="floating-label">Contraseña</label>
-                                <button type="button" class="password-visibility" id="togglePassword">
-                                    <span data-feather="eye" class="visibility-icon"></span>
-                                </button>
-                                <div class="input-border"></div>
                             </div>
-                            {% if form.password.errors %}
-                                <div class="error-message">
-                                    <span data-feather="alert-circle" class="error-icon-small"></span>
-                                    {{ form.password.errors.0 }}
-                                </div>
-                            {% endif %}
                         </div>
-
-                        <!-- Errores generales -->
                         {% if form.non_field_errors %}
                             <div class="alert-modern alert-error mb-4">
-                                <span data-feather="x-circle" class="alert-icon"></span>
-                                <div class="alert-content">
-                                    <strong>Error de autenticación</strong>
-                                    <p>{{ form.non_field_errors.0 }}</p>
-                                </div>
+                                <p>{{ form.non_field_errors.0 }}</p>
                             </div>
                         {% endif %}
 
-                        <!-- Recordar sesión -->
                         <div class="form-options mb-4">
                             <label class="custom-checkbox">
                                 <input type="checkbox" name="remember_me">
                                 <span class="checkmark"></span>
                                 Recordar mi sesión
                             </label>
-                           <a href="{% url 'password_reset' %}" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
+                            <a href="{% url 'password_reset' %}" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
                         </div>
-
-                        <!-- Botón de envío -->
+                        
                         <button type="submit" class="btn-modern btn-primary-modern">
                             <span class="btn-content">
                                 <span data-feather="log-in" class="btn-icon-modern"></span>
                                 <span class="btn-text">Iniciar Sesión</span>
                             </span>
-                            <div class="btn-ripple"></div>
-                            <div class="btn-loading">
-                                <div class="spinner"></div>
-                            </div>
                         </button>
 
-                        <!-- Divisor -->
                         <div class="divider-modern my-4">
                             <span class="divider-text">o continúa con</span>
                         </div>
 
-                        <!-- Enlaces adicionales -->
-                        <div class="additional-links text-center">
+                        <a href="{% provider_login_url 'google' %}" class="btn-modern btn-google">
+                            <span class="btn-content">
+                                <svg width="20" height="20" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="btn-icon-modern"><path d="M17.64 9.20455C17.64 8.56682 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5609V15.8195H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="white"/><path d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5609C11.2418 14.0827 10.2109 14.4205 9 14.4205C6.65591 14.4205 4.67182 12.8373 3.96409 10.71H0.957275V13.0418C2.43818 15.9832 5.48182 18 9 18Z" fill="white"/><path d="M3.96409 10.71C3.78409 10.1718 3.68182 9.59364 3.68182 9C3.68182 8.40636 3.78409 7.82818 3.96409 7.29H0.957275C0.347727 8.55 0 10.0218 0 11.29C0 8.43318 0.520909 6.81682 1.42091 5.40818L3.96409 7.29Z" fill="white"/><path d="M9 3.57955C10.3214 3.57955 11.5077 4.02455 12.4405 4.92545L15.0218 2.34409C13.4673 0.891818 11.43 0 9 0C5.48182 0 2.43818 2.01682 0.957275 4.95818L3.96409 7.29C4.67182 5.16273 6.65591 3.57955 9 3.57955Z" fill="white"/></svg>
+                                <span class="btn-text">Iniciar Sesión con Google</span>
+                            </span>
+                        </a>
+                        <div class="additional-links text-center mt-4">
                             <p class="signup-prompt">
                                 ¿No tienes una cuenta? 
                                 <a href="{% url 'registro' %}" class="signup-link">
@@ -112,8 +83,7 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Columna derecha - Imagen/Decoración -->
+            
             <div class="col-lg-7 col-md-6 d-none d-md-block">
                 <div class="login-visual">
                     <div class="visual-overlay">
@@ -138,7 +108,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Decoración geométrica -->
                     <div class="geometric-decoration">
                         <div class="shape shape-1"></div>
                         <div class="shape shape-2"></div>
@@ -147,10 +116,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
 </div>
-
-<!-- JavaScript específico del login -->
 <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}

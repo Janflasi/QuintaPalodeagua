@@ -24,7 +24,7 @@
              <div class="hero-content">
                 <h1 class="display-3 text-white">Naturaleza y Confort</h1>
                 <p class="lead text-white">Un escape perfecto de la rutina.</p>
-                <a href="#" class="btn btn-principal btn-lg">Ver Disponibilidad</a>
+                <a href="{% url 'ver_disponibilidad_actual' %}" class="btn btn-principal btn-lg">Ver Disponibilidad</a>
             </div>
         </div>
     </div>
@@ -61,4 +61,32 @@
         </div>
     </div>
 </div>
+
+{% if resenas %}
+<div class="container my-5">
+    <div class="row text-center mb-4">
+        <div class="col">
+            <h2>Lo que dicen nuestros clientes</h2>
+            <p class="lead">Experiencias reales de momentos inolvidables.</p>
+        </div>
+    </div>
+    <div class="row">
+        {% for resena in resenas %}
+        <div class="col-lg-4 mb-4 d-flex align-items-stretch">
+            <div class="card h-100 text-center">
+                <div class="card-body d-flex flex-column">
+                    <p class="card-text flex-grow-1"><em>"{{ resena.comentario }}"</em></p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <div class="text-warning mb-2">
+                        {% for i in "x"|ljust:resena.calificacion %}★{% endfor %}
+                    </div>
+                    <small class="text-muted">- {{ resena.usuario.first_name|default:resena.usuario.username }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}

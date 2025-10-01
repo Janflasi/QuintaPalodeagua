@@ -14,4 +14,6 @@ urlpatterns = [
     path('disponibilidad/<int:year>/<int:month>/', views.ver_disponibilidad, name='ver_disponibilidad'),
     
     path('cancelar/<int:reserva_id>/', views.cancelar_reserva_usuario, name='cancelar_reserva_usuario'),
+    # --- AÑADE ESTA LÍNEA ---
+    path('evaluar/<int:reserva_id>/', views.crear_resena, name='crear_resena'),
 ]
