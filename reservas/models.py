@@ -17,12 +17,6 @@ class Reserva(models.Model):
     def __str__(self):
         return f'Reserva de {self.usuario.username} para {self.fecha_reserva}'
 
-    @property
-    def ha_pasado(self):
-        """
-        Devuelve True si la fecha de la reserva ya pasó.
-        """
-        return timezone.now().date() > self.fecha_reserva
 
 class Resena(models.Model):
     reserva = models.OneToOneField(Reserva, on_delete=models.CASCADE, related_name='resena')
@@ -30,7 +24,7 @@ class Resena(models.Model):
     calificacion = models.PositiveIntegerField(choices=[(i, f'{i} estrellas') for i in range(1, 6)])
     comentario = models.TextField(max_length=500)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    aprobada = models.BooleanField(default=False) # El admin debe aprobarla para que sea pública
+    aprobada = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Reseña de {self.usuario.username} para la reserva del {self.reserva.fecha_reserva}'

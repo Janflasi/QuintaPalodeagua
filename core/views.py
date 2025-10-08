@@ -7,19 +7,34 @@ def index(request):
     if request.user.is_authenticated:
         return redirect('login_redirect')
     
-    # Obtenemos las 3 mejores reseñas para mostrarlas en la página principal.
-    mejores_resenas = Resena.objects.filter(aprobada=True, calificacion__gte=4).order_by('-fecha_creacion')[:3]
+    # Obtenemos TODAS las reseñas aprobadas para mostrarlas en la página principal.
+    todas_las_resenas = Resena.objects.filter(aprobada=True).order_by('-fecha_creacion')
 
     context = {
-        'resenas': mejores_resenas
+        'resenas': todas_las_resenas
     }
     return render(request, 'core/index.html', context)
 
 def sobre_nosotros(request):
-    return render(request, 'core/sobre_nosotros.html')
+    """
+    Muestra la página de "Sobre Nosotros". Si el usuario está autenticado,
+    usa la plantilla del panel; de lo contrario, usa la pública.
+    """
+    if request.user.is_authenticated and not request.user.is_staff:
+        template_name = 'core/panel_sobre_nosotros.html'
+    else:
+        template_name = 'core/sobre_nosotros.html'
+        
+    return render(request, template_name)
 
 def contacto(request):
     """
-    Muestra la página estática con la información de contacto.
+    Muestra la página de contacto. Si el usuario está autenticado,
+    usa la plantilla del panel de usuario.
     """
-    return render(request, 'core/contacto.html')
+    if request.user.is_authenticated and not request.user.is_staff:
+        template_name = 'core/panel_contacto.html'
+    else:
+        template_name = 'core/contacto.html'
+        
+    return render(request, template_name)

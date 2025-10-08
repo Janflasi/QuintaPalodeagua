@@ -41,3 +41,18 @@ class PerfilUpdateForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: 3001234567'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Calle 5 # 10-20'}),
         }
+# --- REEMPLAZA ESTE FORMULARIO ---
+class AdminUserCreationForm(forms.ModelForm):
+    """
+    Formulario para que un administrador cree nuevos usuarios.
+    No incluye la contraseña, ya que se enviará una invitación por correo.
+    """
+    is_staff = forms.BooleanField(
+        label="¿Es administrador?", 
+        required=False,
+        help_text="Designa si este usuario puede iniciar sesión en el panel de administración."
+    )
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'is_staff')

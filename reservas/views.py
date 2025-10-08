@@ -9,6 +9,7 @@ from datetime import date
 from django.utils import timezone
 from django.http import JsonResponse
 from django.urls import reverse
+from django.core.paginator import Paginator
 
 # ---------------- VISTAS PARA USUARIOS REGULARES ----------------
 
@@ -84,7 +85,6 @@ def cancelar_reserva_usuario(request, reserva_id):
         messages.error(request, "La reserva que intentas cancelar no existe.")
     return redirect('panel_usuario')
 
-
 @login_required
 def crear_resena(request, reserva_id):
     try:
@@ -92,9 +92,13 @@ def crear_resena(request, reserva_id):
     except Reserva.DoesNotExist:
         messages.error(request, "No puedes evaluar esta reserva.")
         return redirect('panel_usuario')
-    if not reserva.estado == 'confirmada' or not reserva.ha_pasado or hasattr(reserva, 'resena'):
-        messages.error(request, "Esta reserva no puede ser evaluada.")
+
+    # Validaciones: la reserva debe estar confirmada y no tener reseña.
+    # Eliminamos la comprobación de la fecha (ha_pasado).
+    if not reserva.estado == 'confirmada' or hasattr(reserva, 'resena'):
+        messages.error(request, "Esta reserva no se puede evaluar (ya tiene una reseña o no está confirmada).")
         return redirect('panel_usuario')
+
     if request.method == 'POST':
         form = ResenaForm(request.POST)
         if form.is_valid():
@@ -106,8 +110,8 @@ def crear_resena(request, reserva_id):
             return redirect('panel_usuario')
     else:
         form = ResenaForm()
-    return render(request, 'reservas/crear_resena.html', {'form': form, 'reserva': reserva})
 
+    return render(request, 'reservas/crear_resena.html', {'form': form, 'reserva': reserva})
 # ---------------- VISTAS PARA EL PANEL DEL ADMINISTRADOR ----------------
 
 @login_required
@@ -129,15 +133,25 @@ def dashboard_admin(request):
 def lista_reservas_admin(request):
     if not request.user.is_staff:
         return redirect('index')
-    filtro_estado = request.GET.get('estado', '')
-    if filtro_estado in ['pendiente', 'confirmada', 'cancelada']:
-        lista_reservas = Reserva.objects.filter(estado=filtro_estado).order_by('-fecha_creacion')
-    else:
-        lista_reservas = Reserva.objects.all().order_by('-fecha_creacion')
-    return render(request, 'panel_admin/admin_lista_reservas.html', {
-        'reservas': lista_reservas,
-        'filtro_actual': filtro_estado
-    })
+
+    filtro_actual = request.GET.get('estado')
+    reservas_list = Reserva.objects.all().order_by('-fecha_reserva')
+
+    if filtro_actual:
+        reservas_list = reservas_list.filter(estado=filtro_actual)
+
+    # --- INICIO DE LA LÓGICA DE PAGINACIÓN ---
+    # Mostramos 10 reservas en la página principal
+    paginator = Paginator(reservas_list, 10)
+    reservas_pagina = paginator.get_page(1)
+    # --- FIN DE LA LÓGICA DE PAGINACIÓN ---
+
+    context = {
+        'reservas_pagina': reservas_pagina,       # Las 10 primeras para la tabla principal
+        'todas_las_reservas': reservas_list,    # Todas las reservas para el modal
+        'filtro_actual': filtro_actual,
+    }
+    return render(request, 'panel_admin/admin_lista_reservas.html', context)
 
 
 @login_required

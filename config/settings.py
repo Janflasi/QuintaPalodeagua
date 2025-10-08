@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config, Csv # <-- 1. ASEGÚRATE DE AÑADIR 'Csv' AQUÍ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-feq%6s%c9l0_lv*$&0h))nr&oqi2nk3yx$1hovk*i7g5(ax7-i'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool) # <-- 2. LEE EL MODO DEBUG DEL .ENV
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv()) # <-- 3. LEE LOS HOSTS DEL .ENV
 
 
 # Application definition
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'reservas.apps.ReservasConfig',
     'galeria.apps.GaleriaConfig',
     'notificaciones.apps.NotificacionesConfig',
+    'contabilidad.apps.ContabilidadConfig',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +139,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'juanyanflagonzalez@gmail.com'
-EMAIL_HOST_PASSWORD = 'tihd uhip genk azow'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'Quinta Palo de Agua <juanyanflagonzalez@gmail.com>'
 
 

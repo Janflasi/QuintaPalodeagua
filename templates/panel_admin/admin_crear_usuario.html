@@ -1,0 +1,70 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+{% load static %}
+
+{% block title %}Crear Nuevo Usuario{% endblock %}
+
+{% block panel_content %}
+{# Vinculamos la hoja de estilos para formularios que creamos antes #}
+<link rel="stylesheet" href="{% static 'css/admin_form.css' %}">
+
+<div class="page-header">
+    <h1 class="page-title">Crear e Invitar Usuario</h1>
+</div>
+
+<div class="form-card">
+    <div class="form-card-header">
+        <h2 class="form-card-title">Datos del Nuevo Usuario</h2>
+    </div>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-card-body">
+            
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger mb-4">
+                    {% for error in form.non_field_errors %}<span>{{ error }}</span>{% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+                {% if form.username.errors %}<div class="alert alert-danger mt-2 p-2">{{ form.username.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.errors %}<div class="alert alert-danger mt-2 p-2">{{ form.email.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="toggle-group">
+                <label class="toggle-switch">
+                    {{ form.is_staff }}
+                    <span class="slider"></span>
+                </label>
+                <label for="{{ form.is_staff.id_for_label }}" style="font-weight: 500; cursor: pointer;">
+                    {{ form.is_staff.label }}
+                </label>
+            </div>
+            <div class="help-text" style="margin-left: 62px;">{{ form.is_staff.help_text }}</div>
+            
+        </div>
+        <div class="form-card-footer">
+            <a href="{% url 'lista_usuarios_admin' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-principal">Crear e Invitar Usuario</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

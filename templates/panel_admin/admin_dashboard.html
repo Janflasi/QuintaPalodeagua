@@ -1,36 +1,56 @@
 {% extends 'panel_admin/panel_admin_base.html' %}
+{% load static %}
 
 {% block title %}Dashboard del Admin{% endblock %}
 
 {% block panel_content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
+<!-- CSS específico del dashboard -->
+<link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+
+<div class="dashboard-container">
+    <!-- Header del Dashboard -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <p class="dashboard-subtitle">Resumen general del sistema</p>
+    </div>
+
+    <!-- Cards de Estadísticas -->
+    <div class="stats-grid">
+        <!-- Card Total Usuarios -->
+        <div class="stat-card card-usuarios">
+            <div class="stat-card-icon">
+                <span data-feather="users" class="card-icon"></span>
+            </div>
+            <div class="stat-card-content">
+                <h5 class="stat-card-title">Total de Usuarios</h5>
+                <p class="stat-card-value">{{ total_usuarios }}</p>
+            </div>
+        </div>
+
+        <!-- Card Reservas Pendientes -->
+        <div class="stat-card card-pendientes">
+            <div class="stat-card-icon">
+                <span data-feather="clock" class="card-icon"></span>
+            </div>
+            <div class="stat-card-content">
+                <h5 class="stat-card-title">Reservas Pendientes</h5>
+                <p class="stat-card-value">{{ reservas_pendientes }}</p>
+            </div>
+        </div>
+
+        <!-- Card Reservas Confirmadas -->
+        <div class="stat-card card-confirmadas">
+            <div class="stat-card-icon">
+                <span data-feather="check-circle" class="card-icon"></span>
+            </div>
+            <div class="stat-card-content">
+                <h5 class="stat-card-title">Reservas Confirmadas</h5>
+                <p class="stat-card-value">{{ reservas_confirmadas }}</p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4 mb-3">
-        <div class="card text-white bg-primary">
-            <div class="card-body">
-                <h5 class="card-title">Total de Usuarios</h5>
-                <p class="card-text display-4">{{ total_usuarios }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-3">
-        <div class="card text-dark bg-warning">
-            <div class="card-body">
-                <h5 class="card-title">Reservas Pendientes</h5>
-                <p class="card-text display-4">{{ reservas_pendientes }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-3">
-        <div class="card text-white bg-success">
-            <div class="card-body">
-                <h5 class="card-title">Reservas Confirmadas</h5>
-                <p class="card-text display-4">{{ reservas_confirmadas }}</p>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- JavaScript específico del dashboard -->
+<script src="{% static 'js/admin_dashboard.js' %}"></script>
 {% endblock %}

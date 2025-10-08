@@ -51,7 +51,7 @@
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
                                 </form>
-                            {% elif reserva.estado == 'confirmada' and reserva.ha_pasado and not reserva.resena %}
+                            {% elif reserva.estado == 'confirmada' and not reserva.resena %}
                                 <a href="{% url 'crear_resena' reserva.id %}" class="btn btn-info btn-sm">Dejar Reseña</a>
                             {% else %}
                                 <span class="text-muted">--</span>

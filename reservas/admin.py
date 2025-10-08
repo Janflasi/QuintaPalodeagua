@@ -1,23 +1,24 @@
-# reservas/admin.py
-
 from django.contrib import admin
-from .models import Reserva
+from .models import Reserva, Resena # <-- Importamos el nuevo modelo Resena
 
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'fecha_reserva', 'tipo_evento', 'estado', 'fecha_creacion')
+    list_display = ('usuario', 'fecha_reserva', 'tipo_evento', 'estado')
+    list_filter = ('estado', 'fecha_reserva')
     list_editable = ('estado',)
-    list_filter = ('estado', 'fecha_reserva', 'fecha_creacion')
     search_fields = ('usuario__username', 'tipo_evento')
-    ordering = ('-fecha_creacion',)
-    actions = ['marcar_como_confirmada', 'marcar_como_cancelada']
 
-    def marcar_como_confirmada(self, request, queryset):
-        queryset.update(estado='confirmada')
-        self.message_user(request, "Las reservas seleccionadas han sido confirmadas.")
-    marcar_como_confirmada.short_description = "Confirmar reservas seleccionadas"
+# --- AÑADE ESTE NUEVO BLOQUE PARA GESTIONAR LAS RESEÑAS ---
+@admin.register(Resena)
+class ResenaAdmin(admin.ModelAdmin):
+    list_display = ('usuario', 'reserva', 'calificacion', 'aprobada', 'fecha_creacion')
+    list_filter = ('aprobada', 'calificacion')
+    search_fields = ('usuario__username', 'comentario')
+    
+    # Acción para aprobar reseñas seleccionadas
+    actions = ['aprobar_resenas']
 
-    def marcar_como_cancelada(self, request, queryset):
-        queryset.update(estado='cancelada')
-        self.message_user(request, "Las reservas seleccionadas han sido canceladas.")
-    marcar_como_cancelada.short_description = "Cancelar reservas seleccionadas"
+    def aprobar_resenas(self, request, queryset):
+        queryset.update(aprobada=True)
+        self.message_user(request, "Las reseñas seleccionadas han sido aprobadas.")
+    aprobar_resenas.short_description = "Aprobar reseñas seleccionadas"

@@ -1,0 +1,311 @@
+/* static/css/gestionar_reservas.css */
+
+/* Filtros modernos */
+.filtros-reservas {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.filtros-reservas::-webkit-scrollbar { display: none; }
+
+.btn-filtro {
+    border: 2px solid #e5e7eb;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 10px;
+    background: white;
+    color: var(--color-texto-light);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-filtro.active {
+    background: var(--color-principal);
+    color: white;
+    border-color: var(--color-principal);
+    box-shadow: 0 6px 20px rgba(212, 130, 90, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-filtro:not(.active):hover {
+    border-color: var(--color-principal);
+    color: var(--color-principal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Tabla con diseño limpio */
+.reservas-table-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.reservas-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.reservas-table thead th {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #fafafa;
+    white-space: nowrap;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.reservas-table tbody tr {
+    border-bottom: 1px solid #f9fafb;
+    transition: all 0.2s ease;
+}
+
+.reservas-table tbody tr:hover {
+    background: #fef8f5;
+}
+
+.reservas-table tbody td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+    white-space: nowrap;
+    color: var(--color-texto);
+}
+
+/* User info mejorado */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #d4825a 0%, #e89b7a 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(212, 130, 90, 0.25);
+}
+
+.user-details .username {
+    font-weight: 600;
+    color: var(--color-texto);
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+.user-details .email {
+    font-size: 0.8rem;
+    color: var(--color-texto-light);
+}
+
+/* Badges con diseño pill */
+.badge-estado {
+    padding: 0.5rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    display: inline-block;
+}
+
+.badge-pendiente {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.badge-confirmada {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.badge-cancelada {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Botones de acción modernos */
+.acciones-cell {
+    white-space: nowrap;
+}
+
+.acciones-cell .btn {
+    font-size: 0.8rem;
+    padding: 0.55rem 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.acciones-cell .btn-success {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.acciones-cell .btn-success:hover {
+    background: #10b981;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.acciones-cell .btn-danger {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.acciones-cell .btn-danger:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+}
+
+.acciones-cell form {
+    margin: 0 0.3rem;
+    display: inline-block;
+}
+
+/* Botón editar circular */
+.btn-edit {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #f3f4f6;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: var(--color-principal);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(212, 130, 90, 0.3);
+}
+
+.btn-edit span {
+    color: inherit;
+}
+
+/* Modal mejorado */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #fef8f5 0%, white 100%);
+    border-bottom: 1px solid #f3f4f6;
+    padding: 1.75rem 2rem;
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-title {
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--color-texto);
+}
+
+.modal-body {
+    padding: 2rem;
+    background: #fafafa;
+}
+
+.btn-close {
+    padding: 1rem;
+}
+
+/* Responsive optimizado */
+@media (max-width: 1024px) {
+    .reservas-table {
+        min-width: 900px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filtros-reservas {
+        gap: 0.4rem;
+        padding: 0.85rem;
+    }
+    
+    .btn-filtro {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.8rem;
+    }
+    
+    .reservas-table thead th {
+        padding: 1rem;
+        font-size: 0.65rem;
+    }
+    
+    .reservas-table tbody td {
+        padding: 1rem;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    
+    .acciones-cell .btn {
+        padding: 0.45rem 0.9rem;
+        font-size: 0.75rem;
+    }
+    
+    .btn-edit {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .filtros-reservas {
+        padding: 0.75rem;
+    }
+    
+    .btn-filtro {
+        padding: 0.45rem 1rem;
+        font-size: 0.75rem;
+    }
+}

@@ -14,6 +14,7 @@ panel_control_patterns = [
     
     # URLs de gestión de usuarios
     path('usuarios/', usuarios_views.lista_usuarios_admin, name='lista_usuarios_admin'),
+    path('usuarios/crear/', usuarios_views.crear_usuario_admin, name='crear_usuario_admin'), # <-- AÑADE ESTA LÍNEA
     path('usuarios/<int:user_id>/toggle-active/', usuarios_views.activar_desactivar_usuario, name='toggle_usuario_active'),
     
     # URLs de gestión de reservas

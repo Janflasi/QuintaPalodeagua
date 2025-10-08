@@ -1,0 +1,189 @@
+/* static/css/gestionar_usuarios.css */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.page-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    color: var(--color-texto);
+    margin: 0;
+}
+
+/* Tabla escritorio */
+.usuarios-table-container {
+    display: none;
+    background: white;
+    border-radius: var(--radio-suave);
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+}
+
+.table-responsive { overflow-x: auto; }
+
+.usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.usuarios-table thead th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--color-texto-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.usuarios-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: var(--transicion-rapida);
+}
+
+.usuarios-table tbody tr:hover { background-color: rgba(212, 130, 90, 0.04); }
+
+.usuarios-table tbody td {
+    padding: 1rem 1.5rem;
+    vertical-align: middle;
+}
+
+/* Lista móvil */
+.user-list-mobile { 
+    display: block;
+    padding: 0 0.5rem;
+}
+
+.user-card-mobile {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 130, 90, 0.08);
+}
+
+.user-card-mobile:hover { 
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    border-color: rgba(212, 130, 90, 0.2);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-principal), var(--color-principal-light));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(212, 130, 90, 0.25);
+}
+
+.user-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.user-details .username {
+    font-weight: 600;
+    color: var(--color-texto);
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-details .email {
+    font-size: 0.8rem;
+    color: var(--color-texto-light);
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-actions-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.badge-estado {
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.badge-activo { background-color: #d1fae5; color: #065f46; }
+.badge-inactivo { background-color: #fee2e2; color: #991b1b; }
+
+.btn-action {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radio-suave);
+    font-weight: 500;
+    font-size: 0.8rem;
+    transition: var(--transicion-rapida);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-desactivar { background-color: #fee2e2; color: #ef4444; }
+.btn-desactivar:hover { background-color: #ef4444; color: white; transform: translateY(-1px); }
+
+.btn-activar { background-color: #d1fae5; color: #10b981; }
+.btn-activar:hover { background-color: #10b981; color: white; transform: translateY(-1px); }
+
+/* Responsive */
+@media (min-width: 768px) {
+    .usuarios-table-container { display: block; }
+    .user-list-mobile { display: none; }
+    .page-title { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .page-header { flex-direction: column; align-items: stretch; }
+    .page-title { font-size: 1.5rem; }
+    .user-card-mobile { padding: 0.85rem; }
+    .user-avatar { width: 42px; height: 42px; font-size: 1rem; }
+    .user-details .username { font-size: 0.9rem; }
+    .btn-action { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
+}

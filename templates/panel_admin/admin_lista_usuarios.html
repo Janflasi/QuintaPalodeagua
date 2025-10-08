@@ -1,47 +1,103 @@
 {% extends 'panel_admin/panel_admin_base.html' %}
+{% load static %}
 
 {% block title %}Gestionar Usuarios{% endblock %}
 
 {% block panel_content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Gestionar Usuarios</h1>
+<link rel="stylesheet" href="{% static 'css/gestionar_usuarios.css' %}">
+
+<div class="page-header">
+    <h1 class="page-title">Gestionar Usuarios</h1>
+    <a href="{% url 'crear_usuario_admin' %}" class="btn btn-principal">
+        <span data-feather="plus-circle" class="me-2"></span>
+        Crear Nuevo Usuario
+    </a>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Estado</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario in usuarios %}
-            <tr>
-                <td>{{ usuario.username }}</td>
-                <td>{{ usuario.email }}</td>
-                <td>
-                    {% if usuario.is_active %}
-                        <span class="badge bg-success">Activo</span>
-                    {% else %}
-                        <span class="badge bg-danger">Inactivo</span>
-                    {% endif %}
-                </td>
-                <td class="text-center">
-                    <form action="{% url 'toggle_usuario_active' usuario.id %}" method="post" class="d-inline">
-                        {% csrf_token %}
+<div class="user-list-mobile">
+    {% for usuario in usuarios %}
+    <div class="user-card-mobile">
+        <div class="user-info">
+            <div class="user-avatar">
+                {{ usuario.username|first|upper }}
+            </div>
+            <div class="user-details">
+                <span class="username">{{ usuario.first_name|default:usuario.username }} {{ usuario.last_name }}</span>
+                <span class="email">{{ usuario.email }}</span>
+            </div>
+        </div>
+        
+        <div class="user-actions-mobile">
+            {% if usuario.is_active %}
+                <span class="badge-estado badge-activo">Activo</span>
+            {% else %}
+                <span class="badge-estado badge-inactivo">Inactivo</span>
+            {% endif %}
+
+            {% if not usuario.is_superuser and usuario.id != request.user.id %}
+            <form action="{% url 'toggle_usuario_active' usuario.id %}" method="post">
+                {% csrf_token %}
+                {% if usuario.is_active %}
+                    <button type="submit" class="btn-action btn-desactivar">Desactivar</button>
+                {% else %}
+                    <button type="submit" class="btn-action btn-activar">Activar</button>
+                {% endif %}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="usuarios-table-container">
+    <div class="table-responsive">
+        <table class="table usuarios-table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                {{ usuario.username|first|upper }}
+                            </div>
+                            <div class="user-details">
+                                <span class="username">{{ usuario.first_name|default:usuario.username }} {{ usuario.last_name }}</span>
+                                <span class="email">{{ usuario.email }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
                         {% if usuario.is_active %}
-                            <button type="submit" class="btn btn-danger btn-sm">Desactivar</button>
+                            <span class="badge-estado badge-activo">Activo</span>
                         {% else %}
-                            <button type="submit" class="btn btn-success btn-sm">Activar</button>
+                            <span class="badge-estado badge-inactivo">Inactivo</span>
                         {% endif %}
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td class="text-center">
+                        {% if not usuario.is_superuser and usuario.id != request.user.id %}
+                        <form action="{% url 'toggle_usuario_active' usuario.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            {% if usuario.is_active %}
+                                <button type="submit" class="btn-action btn-desactivar">Desactivar</button>
+                            {% else %}
+                                <button type="submit" class="btn-action btn-activar">Activar</button>
+                            {% endif %}
+                        </form>
+                        {% else %}
+                        <span class="text-muted">--</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
