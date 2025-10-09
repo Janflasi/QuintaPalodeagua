@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Quinta Palo de Agua | {% block title %}{% endblock %}</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
+        .email-wrapper { width: 100%; background-color: #f4f7f6; padding: 20px 0; }
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .email-header { background-color: #D4825A; color: white; padding: 30px; text-align: center; }
+        .email-header h1 { margin: 0; font-size: 28px; font-weight: 700; }
+        .email-body { padding: 30px 40px; color: #333; line-height: 1.6; }
+        .email-body h2 { color: #B86B47; font-size: 22px; margin-top: 0; }
+        .email-body p { margin: 0 0 15px; }
+        .details-box { background-color: #f8f9fa; border-left: 4px solid #E8A082; margin: 20px 0; padding: 15px 20px; border-radius: 4px; }
+        .details-box ul { list-style: none; padding: 0; margin: 0; }
+        .details-box li { padding: 5px 0; }
+        .button { display: inline-block; background-color: #D4825A; color: #ffffff !important; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 15px; }
+        .email-footer { background-color: #e9ecef; color: #6c757d; padding: 20px 40px; text-align: center; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-container">
+            <div class="email-header">
+                <h1>Quinta Palo de Agua</h1>
+            </div>
+            <div class="email-body">
+                {% block content %}
+                {% endblock %}
+                <p style="margin-top: 30px;">Saludos cordiales,<br>El equipo de Quinta Palo de Agua</p>
+            </div>
+            <div class="email-footer">
+                <p>&copy; {% now "Y" %} Quinta Palo de Agua. Todos los derechos reservados.</p>
+                <p>Este es un correo electrónico automático, por favor no respondas a este mensaje.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

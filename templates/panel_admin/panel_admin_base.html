@@ -18,35 +18,35 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard_admin' %}">
-                            <span data-feather="grid"></span>
-                            Dashboard
-                        </a>
+                        <a class="nav-link" href="{% url 'dashboard_admin' %}"><span data-feather="grid"></span> Dashboard</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="{% url 'lista_usuarios_admin' %}">
-                            <span data-feather="users"></span>
-                            Gestionar Usuarios
-                        </a>
+                       <a class="nav-link" href="{% url 'lista_usuarios_admin' %}"><span data-feather="users"></span> Gestionar Usuarios</a>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_reservas_admin' %}">
-                            <span data-feather="calendar"></span>
-                            Gestionar Reservas
+                        <a class="nav-link" href="{% url 'lista_reservas_admin' %}"><span data-feather="calendar"></span> Gestionar Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gestionar_galeria_admin' %}"><span data-feather="image"></span> Gestionar Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gestionar_resenas_admin' %}"><span data-feather="star"></span> Gestionar Reseñas</a>
+                    </li>
+                    
+                    {# --- ENLACES CORREGIDOS AQUÍ --- #}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contabilidad:dashboard_contabilidad' %}">
+                            <span data-feather="dollar-sign"></span>
+                            Contabilidad
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'gestionar_galeria_admin' %}">
-                            <span data-feather="image"></span>
-                            Gestionar Galería
+                        <a class="nav-link" href="{% url 'contabilidad:gestionar_inventario' %}">
+                            <span data-feather="archive"></span>
+                            Inventario
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'gestionar_resenas_admin' %}">
-                            <span data-feather="star"></span>
-                            Gestionar Reseñas
-                        </a>
-                    </li>
+                    {# --- FIN DE LA CORRECCIÓN --- #}
                 </ul>
             </div>
         </nav>

@@ -1,0 +1,103 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+{% load static %}
+
+{% block title %}Gestionar Inventario{% endblock %}
+
+{% block panel_content %}
+<div class="page-header">
+    <h1 class="page-title">Inventario y Ventas</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        
+        <div class="card mb-4">
+            <div class="card-header"><h5>Registrar Venta</h5></div>
+            <div class="card-body">
+                {# --- CORRECCIÓN AQUÍ --- #}
+                <form method="post" action="{% url 'contabilidad:gestionar_inventario' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ venta_form.producto.id_for_label }}" class="form-label">{{ venta_form.producto.label }}</label>
+                        {{ venta_form.producto }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ venta_form.cantidad.id_for_label }}" class="form-label">{{ venta_form.cantidad.label }}</label>
+                        {{ venta_form.cantidad }}
+                    </div>
+                    
+                    <button type="submit" name="submit_venta" class="btn btn-principal w-100 mt-3">Registrar Venta</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><h5>Añadir Producto</h5></div>
+            <div class="card-body">
+                {# --- Y CORRECCIÓN AQUÍ --- #}
+                <form method="post" action="{% url 'contabilidad:gestionar_inventario' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ producto_form.nombre.id_for_label }}" class="form-label">{{ producto_form.nombre.label }}</label>
+                        {{ producto_form.nombre }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ producto_form.precio_venta.id_for_label }}" class="form-label">{{ producto_form.precio_venta.label }}</label>
+                        {{ producto_form.precio_venta }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ producto_form.stock_actual.id_for_label }}" class="form-label">{{ producto_form.stock_actual.label }}</label>
+                        {{ producto_form.stock_actual }}
+                    </div>
+
+                    <button type="submit" name="submit_producto" class="btn btn-secondary w-100 mt-3">Añadir Producto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header"><h5>Stock de Productos</h5></div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>Producto</th><th class="text-end">Precio</th><th class="text-end">Stock</th></tr></thead>
+                    <tbody>
+                        {% for prod in productos %}
+                        <tr>
+                            <td class="fw-bold">{{ prod.nombre }}</td>
+                            <td class="text-end">${{ prod.precio_venta|floatformat:2 }}</td>
+                            <td class="text-end">{{ prod.stock_actual }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3" class="text-center py-4">No hay productos en el inventario.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h5>Últimas Ventas</h5></div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>Fecha</th><th>Producto</th><th class="text-end">Cantidad</th><th class="text-end">Total</th></tr></thead>
+                    <tbody>
+                        {% for venta in ultimas_ventas %}
+                        <tr>
+                            <td>{{ venta.fecha|date:"d M, Y H:i" }}</td>
+                            <td>{{ venta.producto.nombre }}</td>
+                            <td class="text-end">{{ venta.cantidad }}</td>
+                            <td class="text-end fw-bold">${{ venta.precio_total|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center py-4">No se han registrado ventas.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

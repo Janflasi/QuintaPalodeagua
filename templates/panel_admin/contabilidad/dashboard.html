@@ -1,0 +1,86 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+{% load static %}
+
+{% block title %}Dashboard de Contabilidad{% endblock %}
+
+{% block panel_content %}
+{# --- Vinculamos los CSS necesarios --- #}
+<link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard_contabilidad.css' %}">
+
+<div class="page-header">
+    <h1 class="page-title">Resumen de Contabilidad</h1>
+    <div>
+        <a href="{% url 'contabilidad:crear_movimiento' tipo_movimiento='egreso' %}" class="btn btn-danger">- Registrar Gasto</a>
+        <a href="{% url 'contabilidad:crear_movimiento' tipo_movimiento='ingreso' %}" class="btn btn-success">+ Registrar Ingreso</a>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card ingresos">
+        <div class="stat-card-icon"><span data-feather="trending-up" class="card-icon"></span></div>
+        <div class="stat-card-content">
+            <h5 class="stat-card-title">Total Ingresos</h5>
+            <p class="stat-card-value">${{ ingresos|floatformat:2 }}</p>
+        </div>
+    </div>
+    <div class="stat-card egresos">
+        <div class="stat-card-icon"><span data-feather="trending-down" class="card-icon"></span></div>
+        <div class="stat-card-content">
+            <h5 class="stat-card-title">Total Egresos</h5>
+            <p class="stat-card-value">${{ egresos|floatformat:2 }}</p>
+        </div>
+    </div>
+    <div class="stat-card balance">
+        <div class="stat-card-icon"><span data-feather="dollar-sign" class="card-icon"></span></div>
+        <div class="stat-card-content">
+            <h5 class="stat-card-title">Balance General</h5>
+            <p class="stat-card-value">${{ balance|floatformat:2 }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2 class="h4 mb-3">Últimos Movimientos</h2>
+    <div class="movimientos-container">
+        <div class="table-responsive">
+            <table class="table movimientos-table mb-0">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th class="text-end">Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mov in ultimos_movimientos %}
+                    <tr>
+                        <td>{{ mov.fecha|date:"d M, Y" }}</td>
+                        <td>
+                            {% if mov.tipo == 'ingreso' %}
+                                <span class="badge-tipo badge-ingreso">Ingreso</span>
+                            {% else %}
+                                <span class="badge-tipo badge-egreso">Egreso</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ mov.descripcion|truncatechars:50 }}</td>
+                        <td class="text-end">
+                            {% if mov.tipo == 'ingreso' %}
+                                <span class="monto-ingreso">+ ${{ mov.monto|floatformat:2 }}</span>
+                            {% else %}
+                                <span class="monto-egreso">- ${{ mov.monto|floatformat:2 }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4">No hay movimientos registrados.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

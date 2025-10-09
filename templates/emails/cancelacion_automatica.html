@@ -1,0 +1,15 @@
+{% extends 'emails/plantilla_email_base.html' %}
+
+{% block title %}Tu Solicitud de Reserva fue Cancelada{% endblock %}
+
+{% block content %}
+    <h2>¡Hola, {{ reserva.usuario.first_name|default:reserva.usuario.username }}!</h2>
+    <p>Te informamos que tu solicitud de reserva para la fecha <strong>{{ reserva.fecha_reserva|date:"d M, Y" }}</strong> ha sido <strong>cancelada automáticamente</strong> debido a que no se recibió la confirmación del pago dentro del plazo de 24 horas.</p>
+    
+    <p>La fecha ahora se encuentra disponible nuevamente para otros clientes. Si aún estás interesado, por favor, realiza una nueva solicitud de reserva.</p>
+    
+    <p>Lamentamos cualquier inconveniente.</p>
+
+    {# --- CORRECCIÓN AQUÍ --- #}
+    <a href="{{ protocol }}://{{ domain }}{% url 'crear_reserva' %}" class="button">Hacer una Nueva Reserva</a>
+{% endblock %}

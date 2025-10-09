@@ -1,4 +1,5 @@
 # notificaciones/views.py
+from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -24,7 +25,6 @@ def ver_notificaciones(request):
     }
     return JsonResponse(data)
 
-
 @login_required
 def marcar_notificacion_leida(request, notificacion_id):
     """
@@ -35,18 +35,16 @@ def marcar_notificacion_leida(request, notificacion_id):
         notificacion.leida = True
         notificacion.save()
 
-        if notificacion.url:
+        # --- LÓGICA DE REDIRECCIÓN MEJORADA ---
+        if notificacion.url and notificacion.url != '#':
             return redirect(notificacion.url)
         else:
-            # Si no hay URL, redirigir al panel correspondiente
+            # Si no hay URL o es '#', redirigir al panel correspondiente
             if request.user.is_staff:
                 return redirect('dashboard_admin')
             else:
                 return redirect('panel_usuario')
 
     except Notificacion.DoesNotExist:
-        # Manejar el caso en que la notificación no exista o no pertenezca al usuario
-        if request.user.is_staff:
-            return redirect('dashboard_admin')
-        else:
-            return redirect('panel_usuario')
+        messages.error(request, "La notificación no existe o no te pertenece.")
+        return redirect('index') # O a donde prefieras

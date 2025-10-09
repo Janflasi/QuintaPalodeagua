@@ -1,0 +1,44 @@
+{% extends 'panel_admin/panel_admin_base.html' %}
+{% load static %}
+
+{% block title %}Registrar {{ tipo_movimiento }}{% endblock %}
+
+{% block panel_content %}
+<link rel="stylesheet" href="{% static 'css/admin_form.css' %}">
+
+<div class="page-header">
+    <h1 class="page-title">Registrar Nuevo {{ tipo_movimiento }}</h1>
+</div>
+
+<div class="form-card">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-card-body">
+            
+            {# Este campo está oculto porque ya lo define la URL, pero es necesario enviarlo #}
+            {{ form.tipo.as_hidden }}
+
+            <div class="form-group">
+                <label for="{{ form.monto.id_for_label }}">{{ form.monto.label }}</label>
+                {{ form.monto }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.descripcion.id_for_label }}">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.reserva_asociada.id_for_label }}">{{ form.reserva_asociada.label }} (Opcional)</label>
+                {{ form.reserva_asociada }}
+                <div class="help-text">Si este ingreso está ligado directamente a una reserva, selecciónala aquí.</div>
+            </div>
+
+        </div>
+        <div class="form-card-footer">
+            <a href="{% url 'contabilidad:dashboard_contabilidad' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn {% if tipo_movimiento == 'Ingreso' %}btn-success{% else %}btn-danger{% endif %}">Guardar {{ tipo_movimiento }}</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

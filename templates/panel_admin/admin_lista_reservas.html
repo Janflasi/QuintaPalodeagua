@@ -31,7 +31,6 @@
                 </tr>
             </thead>
             <tbody>
-                {# AHORA RECORREMOS SOLO LAS RESERVAS DE LA PÁGINA #}
                 {% for reserva in reservas_pagina %}
                 <tr>
                     <td>
@@ -44,62 +43,55 @@
                         </div>
                     </td>
                     <td>{{ reserva.fecha_reserva|date:"d M, Y" }}</td>
-                    <td><span class="badge-estado badge-{{ reserva.estado }}">{{ reserva.estado }}</span></td>
+                    <td><span class="badge-estado badge-{{ reserva.estado|slugify }}">{{ reserva.get_estado_display }}</span></td>
                     <td class="text-center acciones-cell">
                         {% if reserva.estado == 'pendiente' %}
                         <form action="{% url 'actualizar_estado_reserva' reserva.id %}" method="post" class="d-inline">
-                            {% csrf_token %}<input type="hidden" name="estado" value="confirmada"><button type="submit" class="btn btn-success btn-sm">Confirmar</button>
+                            {% csrf_token %}
+                            {# --- CORRECCIÓN AQUÍ --- #}
+                            <input type="hidden" name="estado" value="esperando_pago">
+                            <button type="submit" class="btn btn-success btn-sm">Confirmar</button>
                         </form>
                         <form action="{% url 'actualizar_estado_reserva' reserva.id %}" method="post" class="d-inline">
-                            {% csrf_token %}<input type="hidden" name="estado" value="cancelada"><button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                            {% csrf_token %}
+                            <input type="hidden" name="estado" value="cancelada">
+                            <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
                         </form>
-                        {% else %}<span class="text-muted">--</span>{% endif %}
+                        {% else %}
+                        <span class="text-muted">--</span>
+                        {% endif %}
                     </td>
                     <td>
                         <a href="{% url 'editar_reserva_admin' reserva.id %}" class="btn btn-light btn-edit"><span data-feather="edit-2" style="width:16px; height:16px;"></span></a>
                     </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="7" class="text-center py-5"><p class="mb-0">No hay reservas que coincidan con el filtro.</p></td></tr>
+                <tr><td colspan="5" class="text-center py-5"><p class="mb-0">No hay reservas que coincidan con el filtro.</p></td></tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 
-{# BOTÓN PARA ABRIR EL MODAL (SOLO APARECE SI HAY MÁS DE 10 RESERVAS) #}
 {% if todas_las_reservas.count > 10 %}
 <div class="text-center mt-4">
-    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalTodasReservas">
-        Ver Todas las {{ todas_las_reservas.count }} Reservas
-    </button>
+    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalTodasReservas">Ver Todas las {{ todas_las_reservas.count }} Reservas</button>
 </div>
 {% endif %}
-
 
 <div class="modal fade" id="modalTodasReservas" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Todas las Reservas ({{ todas_las_reservas.count }})</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            <div class="modal-header"><h5 class="modal-title" id="modalLabel">Todas las Reservas ({{ todas_las_reservas.count }})</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
                 <div class="table-responsive">
                     <table class="table reservas-table">
                         <thead>
                             <tr>
-                                <th>Usuario</th>
-                                <th>Fecha Evento</th>
-                                <th>Tipo Evento</th>
-                                <th>Personas</th>
-                                <th>Estado</th>
-                                <th class="text-center">Acciones</th>
-                                <th>Editar</th>
+                                <th>Usuario</th><th>Fecha Evento</th><th>Tipo Evento</th><th>Personas</th><th>Estado</th><th class="text-center">Acciones</th><th>Editar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {# AQUÍ RECORREMOS TODAS LAS RESERVAS #}
                             {% for reserva in todas_las_reservas %}
                             <tr>
                                 <td>
@@ -114,16 +106,23 @@
                                 <td>{{ reserva.fecha_reserva|date:"d M, Y" }}</td>
                                 <td>{{ reserva.tipo_evento }}</td>
                                 <td>{{ reserva.numero_personas }}</td>
-                                <td><span class="badge-estado badge-{{ reserva.estado }}">{{ reserva.estado }}</span></td>
+                                <td><span class="badge-estado badge-{{ reserva.estado|slugify }}">{{ reserva.get_estado_display }}</span></td>
                                 <td class="text-center acciones-cell">
                                     {% if reserva.estado == 'pendiente' %}
                                     <form action="{% url 'actualizar_estado_reserva' reserva.id %}" method="post" class="d-inline">
-                                        {% csrf_token %}<input type="hidden" name="estado" value="confirmada"><button type="submit" class="btn btn-success btn-sm">Confirmar</button>
+                                        {% csrf_token %}
+                                        {# --- Y CORRECCIÓN AQUÍ TAMBIÉN --- #}
+                                        <input type="hidden" name="estado" value="esperando_pago">
+                                        <button type="submit" class="btn btn-success btn-sm">Confirmar</button>
                                     </form>
                                     <form action="{% url 'actualizar_estado_reserva' reserva.id %}" method="post" class="d-inline">
-                                        {% csrf_token %}<input type="hidden" name="estado" value="cancelada"><button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                                        {% csrf_token %}
+                                        <input type="hidden" name="estado" value="cancelada">
+                                        <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
                                     </form>
-                                    {% else %}<span class="text-muted">--</span>{% endif %}
+                                    {% else %}
+                                    <span class="text-muted">--</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <a href="{% url 'editar_reserva_admin' reserva.id %}" class="btn btn-light btn-edit"><span data-feather="edit-2" style="width:16px; height:16px;"></span></a>

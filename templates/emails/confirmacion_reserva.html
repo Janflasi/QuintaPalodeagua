@@ -1,21 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>¡Tu Reserva ha sido Confirmada!</title>
-</head>
-<body>
-    <h2>¡Hola, {{ user.first_name|default:user.username }}!</h2>
-    <p>Nos complace informarte que tu solicitud de reserva en <strong>Quinta Palo de Agua</strong> ha sido <strong>confirmada</strong>.</p>
-    
-    <h4>Detalles de la Reserva:</h4>
-    <ul>
-        <li><strong>Fecha del Evento:</strong> {{ reserva.fecha_reserva|date:"d M, Y" }}</li>
-        <li><strong>Tipo de Evento:</strong> {{ reserva.tipo_evento }}</li>
-        <li><strong>Número de Personas:</strong> {{ reserva.numero_personas }}</li>
-    </ul>
+{% extends 'emails/plantilla_email_base.html' %}
 
-    <p>¡Estamos emocionados de tenerte con nosotros! Si tienes alguna pregunta, no dudes en contactarnos.</p>
-    <p>Saludos,<br>El equipo de Quinta Palo de Agua</p>
-</body>
-</html>
+{% block title %}Tu Reserva está Pre-Aprobada{% endblock %}
+
+{% block content %}
+    <h2>¡Hola, {{ reserva.usuario.first_name|default:reserva.usuario.username }}!</h2>
+    <p>¡Excelentes noticias! Tu solicitud de reserva en <strong>Quinta Palo de Agua</strong> ha sido **PRE-APROBADA**. Para confirmar tu fecha, por favor sigue las instrucciones de pago.</p>
+    
+    <div class="details-box">
+        <h4>Detalles Completos de tu Reserva:</h4>
+        <ul>
+            <li><strong>Fecha del Evento:</strong> {{ reserva.fecha_reserva|date:"d M, Y" }}</li>
+            <li><strong>Hora de Ingreso:</strong> {{ reserva.hora_ingreso|time:"g:i A" }}</li>
+            <li><strong>Hora de Salida:</strong> {{ reserva.hora_salida|time:"g:i A" }}</li>
+            <li><strong>Privilegios Incluidos:</strong><br>{{ reserva.detalles_privilegios|linebreaksbr }}</li>
+        </ul>
+    </div>
+
+    <div class="details-box" style="border-left-color: #ee9b00;">
+        <h4>Instrucciones de Pago:</h4>
+        <p>Para asegurar tu fecha, debes realizar el pago de <strong>${{ reserva.precio|floatformat:2 }}</strong> en las próximas <strong>24 horas</strong>.</p>
+        <ul>
+            <li><strong>Medio de Pago:</strong> Nequi</li>
+            <li><strong>Número:</strong> 3144583380</li>
+            <li><strong>A nombre de:</strong> Juan Diego Gonzalez</li>
+        </ul>
+        <p>Una vez realizado el pago, por favor envía el <strong>comprobante</strong> a nuestro número de WhatsApp: <strong>3132305374</strong>.</p>
+    </div>
+
+    <p style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
+        <strong>Nota sobre penalización:</strong> Se cobrará un monto de ${{ reserva.penalizacion_tardia|floatformat:2 }} por cada hora o fracción adicional después de la hora de salida acordada.
+    </p>
+    
+    <a href="#" class="button">Ver el Estado de mi Reserva</a>
+{% endblock %}

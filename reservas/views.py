@@ -156,21 +156,24 @@ def lista_reservas_admin(request):
 
 @login_required
 def actualizar_estado_reserva(request, reserva_id):
-    if not request.user.is_staff or request.method != 'POST':
+    if not request.user.is_staff:
         return redirect('index')
-    nuevo_estado = request.POST.get('estado')
-    if nuevo_estado not in ['confirmada', 'cancelada']:
-        messages.error(request, "Estado no válido.")
-        return redirect('lista_reservas_admin')
+
     try:
         reserva = Reserva.objects.get(id=reserva_id)
-        reserva.estado = nuevo_estado
-        reserva.save()
-        messages.success(request, f"La reserva para {reserva.usuario.username} ha sido actualizada a '{nuevo_estado}'.")
-    except Reserva.DoesNotExist:
-        messages.error(request, "La reserva no existe.")
-    return redirect('lista_reservas_admin')
+        nuevo_estado = request.POST.get('estado')
 
+        if nuevo_estado in ['esperando_pago', 'cancelada']:
+            reserva.estado = nuevo_estado
+            reserva.save()
+            messages.success(request, f'El estado de la reserva ha sido actualizado a "{reserva.get_estado_display()}".')
+        else:
+            messages.error(request, 'Estado no válido.')
+
+    except Reserva.DoesNotExist:
+        messages.error(request, 'La reserva no existe.')
+    
+    return redirect('lista_reservas_admin')
 
 @login_required
 def editar_reserva_admin(request, reserva_id):
